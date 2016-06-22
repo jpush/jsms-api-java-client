@@ -2,13 +2,13 @@ package cn.jsms.api;
 
 import com.google.gson.annotations.Expose;
 
-import cn.jpush.api.common.resp.BaseResult;
+import cn.jiguang.common.resp.BaseResult;
 
 public class SendSMSResult extends BaseResult {
 	
-	@Expose Long msg_id;
+	@Expose String msg_id;
 	
-	public Long getMessageId() {
+	public String getMessageId() {
 		return msg_id;
 	}
 

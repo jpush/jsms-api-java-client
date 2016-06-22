@@ -4,13 +4,13 @@ import java.util.regex.Pattern;
 
 import com.google.gson.JsonObject;
 
-import cn.jpush.api.common.ServiceHelper;
-import cn.jpush.api.common.connection.HttpProxy;
-import cn.jpush.api.common.connection.NativeHttpClient;
-import cn.jpush.api.common.resp.APIConnectionException;
-import cn.jpush.api.common.resp.APIRequestException;
-import cn.jpush.api.common.resp.ResponseWrapper;
-import cn.jpush.api.utils.Preconditions;
+import cn.jiguang.commom.ServiceHelper;
+import cn.jiguang.commom.utils.Preconditions;
+import cn.jiguang.common.connection.HttpProxy;
+import cn.jiguang.common.connection.NativeHttpClient;
+import cn.jiguang.common.resp.APIConnectionException;
+import cn.jiguang.common.resp.APIRequestException;
+import cn.jiguang.common.resp.ResponseWrapper;
 import cn.jsms.api.SendSMSResult;
 import cn.jsms.api.ValidSMSResult;
 import cn.jsms.api.common.model.SMSPayload;

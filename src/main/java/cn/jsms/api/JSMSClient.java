@@ -1,6 +1,6 @@
 package cn.jsms.api;
 
-import cn.jpush.api.common.connection.HttpProxy;
+import cn.jiguang.common.connection.HttpProxy;
 import cn.jsms.api.common.JSMSConfig;
 import cn.jsms.api.common.SMSClient;
 

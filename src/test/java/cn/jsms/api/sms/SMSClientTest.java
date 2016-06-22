@@ -1,6 +1,7 @@
 package cn.jsms.api.sms;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -10,8 +11,8 @@ import org.slf4j.LoggerFactory;
 
 import com.google.gson.JsonObject;
 
-import cn.jpush.api.common.resp.APIConnectionException;
-import cn.jpush.api.common.resp.APIRequestException;
+import cn.jiguang.common.resp.APIConnectionException;
+import cn.jiguang.common.resp.APIRequestException;
 import cn.jsms.api.BaseTest;
 import cn.jsms.api.SendSMSResult;
 import cn.jsms.api.SlowTests;
@@ -35,12 +36,12 @@ public class SMSClientTest extends BaseTest {
 	@Test
 	public void testSendSMSCode() {
 		SMSPayload payload = SMSPayload.newBuilder()
-				.setMobildNumber("13570210796")
+				.setMobildNumber("13800138000")
 				.setTempId(1)
 				.build();
 		
 		JsonObject json = new JsonObject();
-		json.addProperty("mobile", "13570210796");
+		json.addProperty("mobile", "13800138000");
 		json.addProperty("temp_id", 1);
 		
 		assertEquals(payload.toJSON(), json);
@@ -166,7 +167,7 @@ public class SMSClientTest extends BaseTest {
 	@Test
 	public void testSendValidSMSCode() {
 		try {
-			ValidSMSResult res = client.sendValidSMSCode("5d7f4f78-5f41-4025-a253-50bc9a3ae1d6", 459868);
+			ValidSMSResult res = client.sendValidSMSCode("f3247cce-811c-4260-9bc6-ed27e2e81963", 865425);
 			assertEquals(true, res.getIsValid());
 			System.out.println(res.toString());
 		} catch (APIConnectionException e) {

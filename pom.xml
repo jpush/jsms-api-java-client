@@ -44,12 +44,6 @@
 			<version>1.7.7</version>
 		</dependency>
 
-		<dependency>
-			<groupId>cn.jpush.api</groupId>
-			<artifactId>jpush-client</artifactId>
-			<version>3.2.9</version>
-		</dependency>
-
 		<!-- Test Dependencies -->
 
 		<dependency>
