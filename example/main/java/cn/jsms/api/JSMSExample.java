@@ -5,7 +5,6 @@ import org.slf4j.LoggerFactory;
 
 import cn.jiguang.common.resp.APIConnectionException;
 import cn.jiguang.common.resp.APIRequestException;
-import cn.jsms.api.common.JSMSConfig;
 import cn.jsms.api.common.SMSClient;
 import cn.jsms.api.common.model.SMSPayload;
 
@@ -44,7 +43,7 @@ public class JSMSExample {
     	SMSClient client = new SMSClient(masterSecret, appkey);
 		try {
 			ValidSMSResult res = client.sendValidSMSCode("23956732-d63f-438b-b940-e1578cc0199f", 225415);
-			System.out.println(res.toString());
+			LOG.info(res.toString());
 		} catch (APIConnectionException e) {
             LOG.error("Connection error. Should retry later. ", e);
         } catch (APIRequestException e) {

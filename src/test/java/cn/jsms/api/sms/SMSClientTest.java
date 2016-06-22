@@ -17,7 +17,6 @@ import cn.jsms.api.BaseTest;
 import cn.jsms.api.SendSMSResult;
 import cn.jsms.api.SlowTests;
 import cn.jsms.api.ValidSMSResult;
-import cn.jsms.api.common.JSMSConfig;
 import cn.jsms.api.common.SMSClient;
 import cn.jsms.api.common.model.SMSPayload;
 
