@@ -49,7 +49,7 @@ public class SMSClientTest extends BaseTest {
 		try {
 			SendSMSResult res = client.sendSMSCode(payload);
 			assertTrue(res.isResultOK());
-			System.out.println(res.toString());
+			LOG.info(res.toString());
 		} catch (APIConnectionException e) {
             LOG.error("Connection error. Should retry later. ", e);
         } catch (APIRequestException e) {
@@ -168,7 +168,7 @@ public class SMSClientTest extends BaseTest {
 		try {
 			ValidSMSResult res = client.sendValidSMSCode("f3247cce-811c-4260-9bc6-ed27e2e81963", 865425);
 			assertEquals(true, res.getIsValid());
-			System.out.println(res.toString());
+			LOG.info(res.toString());
 		} catch (APIConnectionException e) {
             LOG.error("Connection error. Should retry later. ", e);
         } catch (APIRequestException e) {
