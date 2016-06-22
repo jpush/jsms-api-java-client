@@ -30,7 +30,7 @@ public class SMSClientTest extends BaseTest {
 	
 	@Before
 	public void before() throws Exception {
-		client = new SMSClient(MASTER_SECRET, APP_KEY, null, JSMSConfig.getInstance());
+		client = new SMSClient(MASTER_SECRET, APP_KEY);
 	}
 	
 	@Test
@@ -126,12 +126,12 @@ public class SMSClientTest extends BaseTest {
 	@Test(expected = IllegalArgumentException.class)
 	public void testSendSMSCode_InvalidMobile3() {
 		SMSPayload payload = SMSPayload.newBuilder()
-				.setMobildNumber("12345678901")
+				.setMobildNumber("17033839139")
 				.setTempId(1)
 				.build();
 		
 		JsonObject json = new JsonObject();
-		json.addProperty("mobile", "12345678901");
+		json.addProperty("mobile", "1703839139");
 		json.addProperty("temp_id", 1);
 		
 		assertEquals(payload.toJSON(), json);

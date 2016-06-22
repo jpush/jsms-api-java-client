@@ -11,6 +11,10 @@ public class JSMSClient {
 	
 	private SMSClient _smsClient;
 	
+	public JSMSClient(String masterSecret, String appkey) {
+		_smsClient = new SMSClient(masterSecret, appkey);
+	}
+	
 	public JSMSClient(String masterSecret, String appkey, HttpProxy proxy, JSMSConfig conf) {
 		_smsClient = new SMSClient(masterSecret, appkey, proxy, conf);
 	}

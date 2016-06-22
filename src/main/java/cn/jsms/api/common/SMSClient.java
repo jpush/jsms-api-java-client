@@ -23,6 +23,10 @@ public class SMSClient {
 	private String _smsPath;
 	private String _validPath;
 	private NativeHttpClient _httpClient;
+	
+	public SMSClient(String masterSecret, String appkey) {
+        this(masterSecret, appkey, null, JSMSConfig.getInstance());
+	}
 
 	public SMSClient(String masterSecret, String appkey, HttpProxy proxy, JSMSConfig conf) {
 		ServiceHelper.checkBasic(appkey, masterSecret);

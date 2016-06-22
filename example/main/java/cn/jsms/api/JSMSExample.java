@@ -18,19 +18,19 @@ public class JSMSExample {
     private static final String masterSecret = "2f5ced2bef64167950e63d13";
     
     public static void main(String[] args) {
-//    	testSendSMSCode();
+    	testSendSMSCode();
 //    	testSendValidSMSCode();
     }
     
     public static void testSendSMSCode() {
-    	SMSClient client = new SMSClient(masterSecret, appkey, null, JSMSConfig.getInstance());
+    	SMSClient client = new SMSClient(masterSecret, appkey);
     	SMSPayload payload = SMSPayload.newBuilder()
 				.setMobildNumber("13800138000")
 				.setTempId(1)
 				.build();
     	try {
 			SendSMSResult res = client.sendSMSCode(payload);
-			System.out.println(res.toString());
+			LOG.info(res.toString());
 		} catch (APIConnectionException e) {
             LOG.error("Connection error. Should retry later. ", e);
         } catch (APIRequestException e) {
@@ -41,7 +41,7 @@ public class JSMSExample {
     }
     
     public static void testSendValidSMSCode() {
-    	SMSClient client = new SMSClient(masterSecret, appkey, null, JSMSConfig.getInstance());
+    	SMSClient client = new SMSClient(masterSecret, appkey);
 		try {
 			ValidSMSResult res = client.sendValidSMSCode("23956732-d63f-438b-b940-e1578cc0199f", 225415);
 			System.out.println(res.toString());
