@@ -53,7 +53,6 @@ public class SMSClientTest extends BaseTest {
 		} catch (APIConnectionException e) {
             LOG.error("Connection error. Should retry later. ", e);
         } catch (APIRequestException e) {
-        	e.printStackTrace();
             LOG.error("Error response from JPush server. Should review and fix it. ", e);
             LOG.info("HTTP Status: " + e.getStatus());
             LOG.info("Error Message: " + e.getMessage());
@@ -173,7 +172,6 @@ public class SMSClientTest extends BaseTest {
 		} catch (APIConnectionException e) {
             LOG.error("Connection error. Should retry later. ", e);
         } catch (APIRequestException e) {
-        	e.printStackTrace();
             LOG.error("Error response from JPush server. Should review and fix it. ", e);
             LOG.info("HTTP Status: " + e.getStatus());
             LOG.info("Error Message: " + e.getMessage());
@@ -187,7 +185,6 @@ public class SMSClientTest extends BaseTest {
 		} catch (APIConnectionException e) {
             LOG.error("Connection error. Should retry later. ", e);
         } catch (APIRequestException e) {
-        	e.printStackTrace();
             LOG.error("Error response from JPush server. Should review and fix it. ", e);
             LOG.info("HTTP Status: " + e.getStatus());
             LOG.info("Error Message: " + e.getMessage());
@@ -201,7 +198,6 @@ public class SMSClientTest extends BaseTest {
 		} catch (APIConnectionException e) {
             LOG.error("Connection error. Should retry later. ", e);
         } catch (APIRequestException e) {
-        	e.printStackTrace();
             LOG.error("Error response from JPush server. Should review and fix it. ", e);
             LOG.info("HTTP Status: " + e.getStatus());
             LOG.info("Error Message: " + e.getMessage());
@@ -215,7 +211,6 @@ public class SMSClientTest extends BaseTest {
 		} catch (APIConnectionException e) {
             LOG.error("Connection error. Should retry later. ", e);
         } catch (APIRequestException e) {
-        	e.printStackTrace();
             LOG.error("Error response from JPush server. Should review and fix it. ", e);
             LOG.info("HTTP Status: " + e.getStatus());
             LOG.info("Error Message: " + e.getMessage());

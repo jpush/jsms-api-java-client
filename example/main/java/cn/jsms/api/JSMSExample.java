@@ -1,8 +1,5 @@
 package cn.jsms.api;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,12 +30,10 @@ public class JSMSExample {
 				.build();
     	try {
 			SendSMSResult res = client.sendSMSCode(payload);
-			assertTrue(res.isResultOK());
 			System.out.println(res.toString());
 		} catch (APIConnectionException e) {
             LOG.error("Connection error. Should retry later. ", e);
         } catch (APIRequestException e) {
-        	e.printStackTrace();
             LOG.error("Error response from JPush server. Should review and fix it. ", e);
             LOG.info("HTTP Status: " + e.getStatus());
             LOG.info("Error Message: " + e.getMessage());
@@ -49,12 +44,10 @@ public class JSMSExample {
     	SMSClient client = new SMSClient(masterSecret, appkey, null, JSMSConfig.getInstance());
 		try {
 			ValidSMSResult res = client.sendValidSMSCode("23956732-d63f-438b-b940-e1578cc0199f", 225415);
-			assertEquals(true, res.getIsValid());
 			System.out.println(res.toString());
 		} catch (APIConnectionException e) {
             LOG.error("Connection error. Should retry later. ", e);
         } catch (APIRequestException e) {
-        	e.printStackTrace();
             LOG.error("Error response from JPush server. Should review and fix it. ", e);
             LOG.info("HTTP Status: " + e.getStatus());
             LOG.info("Error Message: " + e.getMessage());

@@ -1,6 +1,5 @@
 package cn.jsms.api;
 
-import com.google.gson.JsonObject;
 import com.google.gson.annotations.Expose;
 
 import cn.jiguang.common.resp.BaseResult;
