@@ -6,8 +6,9 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
-import cn.jpush.api.utils.Preconditions;
-import cn.jpush.api.utils.StringUtils;
+import cn.jiguang.commom.utils.Preconditions;
+import cn.jiguang.commom.utils.StringUtils;
+
 
 public class SMSPayload implements IModel {
 
@@ -18,7 +19,7 @@ public class SMSPayload implements IModel {
 	private int temp_id;
 
 	private static Gson gson = new Gson();
-	private static final Pattern MOBILE_PATTERN = Pattern.compile("^((13[0-9])|(14[5,7])|(15[^4,\\D])|(17[6-8])|(18[0-9]))\\d{8}$");
+	private static final Pattern MOBILE_PATTERN = Pattern.compile("^(((13[0-9])|(14[57])|(15[012356789])|(17[6-8])|(18[0-9]))\\d{8})|((1700)|(1705)|(1709))\\d{7}$");
 
 	public SMSPayload(String mobileNumber, int tempId) {
 		this.mobile = mobileNumber;

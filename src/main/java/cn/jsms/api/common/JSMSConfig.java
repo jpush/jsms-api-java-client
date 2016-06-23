@@ -1,6 +1,6 @@
 package cn.jsms.api.common;
 
-import cn.jpush.api.common.ClientConfig;
+import cn.jiguang.commom.ClientConfig;
 
 public class JSMSConfig {
 

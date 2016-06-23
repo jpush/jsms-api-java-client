@@ -44,12 +44,6 @@
 			<version>1.7.7</version>
 		</dependency>
 
-		<dependency>
-			<groupId>cn.jpush.api</groupId>
-			<artifactId>jpush-client</artifactId>
-			<version>3.2.9</version>
-		</dependency>
-
 		<!-- Test Dependencies -->
 
 		<dependency>
@@ -82,9 +76,10 @@
 
 	<build>
 		<plugins>
+		
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.1</version>
+				<version>3.5.1</version>
 				<configuration>
 					<source>${jdkVersion}</source>
 					<target>${jdkVersion}</target>
@@ -98,31 +93,11 @@
 					</compilerArgs>
 				</configuration>
 			</plugin>
-
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-release-plugin</artifactId>
-				<version>2.5.1</version>
-				<dependencies>
-					<dependency>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-scm-plugin</artifactId>
-						<version>1.9.2</version>
-					</dependency>
-				</dependencies>
-				<configuration>
-					<goals>deploy,site</goals>
-					<pushChanges>false</pushChanges>
-					<localCheckout>true</localCheckout>
-					<commitByProject>true</commitByProject>
-					<tagNameFormat>v@{project.version}</tagNameFormat>
-				</configuration>
-			</plugin>
-
+			
 			<plugin>
 				<groupId>com.github.github</groupId>
 				<artifactId>site-maven-plugin</artifactId>
-				<version>0.9</version>
+				<version>0.12</version>
 				<configuration>
 					<message>Creating site for ${project.version}</message>
 					<server>github</server>
@@ -136,13 +111,13 @@
 					</execution>
 				</executions>
 			</plugin>
-
+			
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
-				<version>2.17</version>
+				<version>2.19.1</version>
 				<configuration>
-					<groups>cn.jmessage.api.FastTests</groups>
+					<groups>cn.jpush.api.FastTests</groups>
 					<argLine>-Dfile.encoding=UTF-8</argLine>
 					<excludes>
 						<exclude>**/mock/*Test.java</exclude>
@@ -152,18 +127,18 @@
 					<dependency>
 						<groupId>org.apache.maven.surefire</groupId>
 						<artifactId>surefire-junit47</artifactId>
-						<version>2.17</version>
+						<version>2.19.1</version>
 					</dependency>
 				</dependencies>
 			</plugin>
-
+			
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-failsafe-plugin</artifactId>
-				<version>2.17</version>
+				<version>2.19.1</version>
 				<configuration>
 					<encoding>UTF-8</encoding>
-					<groups>cn.jmessage.api.SlowTests</groups>
+					<groups>cn.jpush.api.SlowTests</groups>
 					<argLine>-Dfile.encoding=UTF-8</argLine>
 					<excludes>
 						<exclude>**/mock/*Test.java</exclude>
@@ -186,19 +161,21 @@
 					<dependency>
 						<groupId>org.apache.maven.surefire</groupId>
 						<artifactId>surefire-junit47</artifactId>
-						<version>2.17</version>
+						<version>2.19.1</version>
 					</dependency>
 				</dependencies>
 			</plugin>
+			
 		</plugins>
 	</build>
 
 	<reporting>
 		<plugins>
+		
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-project-info-reports-plugin</artifactId>
-				<version>2.8</version>
+				<version>2.8.1</version>
 				<reportSets>
 					<reportSet>
 						<reports>
@@ -209,6 +186,7 @@
 					</reportSet>
 				</reportSets>
 			</plugin>
+
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
@@ -217,6 +195,8 @@
 					<overview>resources/javadoc-overview.html</overview>
 				</configuration>
 			</plugin>
+			
 		</plugins>
 	</reporting>
+	
 </project>

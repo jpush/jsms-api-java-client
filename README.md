@@ -21,7 +21,7 @@
 ### 依赖包
 * [slf4j](http://www.slf4j.org/) / log4j (Logger)
 * [gson](https://code.google.com/p/google-gson/) (Google JSON Utils)
-* [jpush-client](https://github.com/jpush/jpush-api-java-client)
+* [jiguang-common-client](https://github.com/jpush/jiguang-java-client-common)
 
 > 其中 slf4j 可以与 logback, log4j, commons-logging 等日志框架一起工作，可根据你的需要配置使用。
 
@@ -41,9 +41,9 @@
 	<version>1.7.5</version>
 </dependency>
 <dependency>
-	<groupId>cn.jpush.api</groupId>
-	<artifactId>jpush-client</artifactId>
-	<version>3.2.9</version>
+	<groupId>cn.jiguang.common</groupId>
+	<artifactId>jiguang-common-client</artifactId>
+	<version>0.0.1</version>
 </dependency>
 <!-- For log4j -->
 <dependency>
