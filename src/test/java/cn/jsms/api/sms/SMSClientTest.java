@@ -203,7 +203,7 @@ public class SMSClientTest extends BaseTest {
         }
 	}
 	
-	@Test
+	@Test(expected = IllegalArgumentException.class)
 	public void testSendValidSMSCode_InvalidCode3() {
 		try {
 			client.sendValidSMSCode("5d7f4f78-5f41-4025-a253-50bc9a3ae1d6", 1234567);
