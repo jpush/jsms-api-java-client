@@ -43,7 +43,7 @@
 <dependency>
 	<groupId>cn.jiguang.common</groupId>
 	<artifactId>jiguang-common-client</artifactId>
-	<version>0.0.1</version>
+	<version>0.1.2</version>
 </dependency>
 <!-- For log4j -->
 <dependency>
