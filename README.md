@@ -9,6 +9,7 @@
 
 ### maven 方式
 将下边的依赖条件放到你项目的 maven pom.xml 文件里。
+> 其中 slf4j 可以与 logback, log4j, commons-logging 等日志框架一起工作，可根据你的需要配置使用。
 
 ```Java
 <dependency>
@@ -16,20 +17,6 @@
     <artifactId>jsms-client</artifactId>
     <version>0.0.1</version>
 </dependency>
-```
-
-### 依赖包
-* [slf4j](http://www.slf4j.org/) / log4j (Logger)
-* [gson](https://code.google.com/p/google-gson/) (Google JSON Utils)
-* [jiguang-common-client](https://github.com/jpush/jiguang-java-client-common)
-
-> 其中 slf4j 可以与 logback, log4j, commons-logging 等日志框架一起工作，可根据你的需要配置使用。
-
-
-
-如果使用 Maven 构建项目，则需要在你的项目 pom.xml 里增加：
-
-```Java
 <dependency>
 	<groupId>com.google.code.gson</groupId>
 	<artifactId>gson</artifactId>
@@ -58,4 +45,10 @@
 </dependency>
 ```
 
-如果不使用 Maven 构建项目，则项目 libs/ 目录下有依赖的 jar 可复制到你的项目里去。
+### jar 包方式
+* [slf4j](http://www.slf4j.org/) / log4j (Logger)
+* [gson](https://code.google.com/p/google-gson/) (Google JSON Utils)
+* [jiguang-common-client](https://github.com/jpush/jiguang-java-client-common)
+* [jsms-client](https://github.com/jpush/jsms-api-java-client/releases/download/jsms-client-0.0.1/jiguang-common-0.1.2.jar)
+
+[项目 libs/ 目录](https://github.com/jpush/jsms-api-java-client/tree/master/libs)下可以找到 slf4j 及 gson jar 包 可复制到你的项目里去。
