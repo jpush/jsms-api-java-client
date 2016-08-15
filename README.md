@@ -49,6 +49,6 @@
 * [slf4j](http://www.slf4j.org/) / log4j (Logger)
 * [gson](https://code.google.com/p/google-gson/) (Google JSON Utils)
 * [jiguang-common-client](https://github.com/jpush/jiguang-java-client-common)
-* [jsms-client](https://github.com/jpush/jsms-api-java-client/releases/download/jsms-client-0.0.1/jiguang-common-0.1.2.jar)
+* [jsms-client](https://github.com/jpush/jsms-api-java-client/releases/download/jsms-client-0.0.1/jsms-client-0.0.1.jar)
 
 [项目 libs/ 目录](https://github.com/jpush/jsms-api-java-client/tree/master/libs)下可以找到 slf4j 及 gson jar 包 可复制到你的项目里去。
