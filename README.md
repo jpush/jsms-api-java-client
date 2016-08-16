@@ -30,7 +30,7 @@
 <dependency>
 	<groupId>cn.jiguang.common</groupId>
 	<artifactId>jiguang-common-client</artifactId>
-	<version>0.1.3</version>
+	<version>0.1.4</version>
 </dependency>
 <!-- For log4j -->
 <dependency>
@@ -49,6 +49,6 @@
 * [slf4j](http://www.slf4j.org/) / log4j (Logger)
 * [gson](https://code.google.com/p/google-gson/) (Google JSON Utils)
 * [jiguang-common-client](https://github.com/jpush/jiguang-java-client-common)
-* [jsms-client](https://github.com/jpush/jsms-api-java-client/releases/download/jsms-client-0.0.1/jsms-client-0.0.1.jar)
+* [jsms-client](https://github.com/jpush/jsms-api-java-client/releases/download/untagged-4cbec00ab81854d168fe/jsms-client-0.0.2.jar)
 
 [项目 libs/ 目录](https://github.com/jpush/jsms-api-java-client/tree/master/libs)下可以找到 slf4j 及 gson jar 包 可复制到你的项目里去。
