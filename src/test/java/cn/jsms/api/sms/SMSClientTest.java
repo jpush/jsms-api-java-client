@@ -165,7 +165,7 @@ public class SMSClientTest extends BaseTest {
 	@Test
 	public void testSendValidSMSCode() {
 		try {
-			ValidSMSResult res = client.sendValidSMSCode("f3247cce-811c-4260-9bc6-ed27e2e81963", 865425);
+			ValidSMSResult res = client.sendValidSMSCode("f3247cce-811c-4260-9bc6-ed27e2e81963", "865425");
 			assertEquals(true, res.getIsValid());
 			LOG.info(res.toString());
 		} catch (APIConnectionException e) {
@@ -180,7 +180,7 @@ public class SMSClientTest extends BaseTest {
 	@Test(expected = IllegalArgumentException.class)
 	public void testSendValidSMSCode_InvalidCode1() {
 		try {
-			client.sendValidSMSCode("5d7f4f78-5f41-4025-a253-50bc9a3ae1d6", -1);
+			client.sendValidSMSCode("5d7f4f78-5f41-4025-a253-50bc9a3ae1d6", "-1");
 		} catch (APIConnectionException e) {
             LOG.error("Connection error. Should retry later. ", e);
         } catch (APIRequestException e) {
@@ -193,7 +193,7 @@ public class SMSClientTest extends BaseTest {
 	@Test(expected = IllegalArgumentException.class)
 	public void testSendValidSMSCode_InvalidCode2() {
 		try {
-			client.sendValidSMSCode("5d7f4f78-5f41-4025-a253-50bc9a3ae1d6", 123);
+			client.sendValidSMSCode("5d7f4f78-5f41-4025-a253-50bc9a3ae1d6", "123");
 		} catch (APIConnectionException e) {
             LOG.error("Connection error. Should retry later. ", e);
         } catch (APIRequestException e) {
@@ -206,7 +206,7 @@ public class SMSClientTest extends BaseTest {
 	@Test(expected = IllegalArgumentException.class)
 	public void testSendValidSMSCode_InvalidCode3() {
 		try {
-			client.sendValidSMSCode("5d7f4f78-5f41-4025-a253-50bc9a3ae1d6", 1234567);
+			client.sendValidSMSCode("5d7f4f78-5f41-4025-a253-50bc9a3ae1d6", "1234567");
 		} catch (APIConnectionException e) {
             LOG.error("Connection error. Should retry later. ", e);
         } catch (APIRequestException e) {

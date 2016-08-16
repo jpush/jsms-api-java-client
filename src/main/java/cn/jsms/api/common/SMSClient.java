@@ -62,12 +62,11 @@ public class SMSClient {
 	 * @throws APIConnectionException
 	 * @throws APIRequestException
 	 */
-	public ValidSMSResult sendValidSMSCode(String msgId, int code)
+	public ValidSMSResult sendValidSMSCode(String msgId, String code)
 		throws APIConnectionException, APIRequestException {
 		Preconditions.checkArgument(null != msgId, "Message id should not be null");
-		String codeStr = String.valueOf(code);
 		Pattern codePattern = Pattern.compile("^[0-9]{6}");
-		Preconditions.checkArgument(codePattern.matcher(codeStr).matches(), "The verification code shoude be consist of six number");
+		Preconditions.checkArgument(codePattern.matcher(code).matches(), "The verification code shoude be consist of six number");
 		JsonObject json = new JsonObject();
 		json.addProperty(SMS_CODE, code);
 		

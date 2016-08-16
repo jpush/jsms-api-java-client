@@ -24,7 +24,7 @@ public class JSMSClient {
 		return _smsClient.sendSMSCode(payload);
 	}
 	
-	public ValidSMSResult sendValidSMSCode(String msgId, int code) 
+	public ValidSMSResult sendValidSMSCode(String msgId, String code)
 		throws APIConnectionException, APIRequestException {
 		return _smsClient.sendValidSMSCode(msgId, code);
 	}
