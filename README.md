@@ -15,7 +15,7 @@
 <dependency>
     <groupId>cn.jsms.api</groupId>
     <artifactId>jsms-client</artifactId>
-    <version>0.0.1</version>
+    <version>0.0.2</version>
 </dependency>
 <dependency>
 	<groupId>com.google.code.gson</groupId>
