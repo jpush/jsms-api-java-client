@@ -140,18 +140,6 @@ public class SMSClientTest extends BaseTest {
 	}
 	
 	@Test(expected = IllegalArgumentException.class)
-	public void testSendSMSCode_TempIdNull() {
-		SMSPayload payload = SMSPayload.newBuilder()
-				.setMobildNumber("13800138000")
-				.build();
-		
-		JsonObject json = new JsonObject();
-		json.addProperty("mobile", "13800138000");
-		
-		assertEquals(payload.toJSON(), json);
-	}
-	
-	@Test(expected = IllegalArgumentException.class)
 	public void testSendSMSCode_TempIdNegative() {
 		SMSPayload payload = SMSPayload.newBuilder()
 				.setMobildNumber("13800138000")

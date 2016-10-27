@@ -45,7 +45,7 @@ public class SMSClient {
 	
 	/**
 	 * Send SMS verification code to mobile
-	 * @param payload include two parameters: mobile number and templete id.
+	 * @param payload include two parameters: mobile number and templete id. The second parameter is optional.
 	 * @return return SendSMSResult which includes msg_id
 	 * @throws APIConnectionException connection exception
 	 * @throws APIRequestException request exception
