@@ -15,33 +15,43 @@
 <dependency>
     <groupId>cn.jsms.api</groupId>
     <artifactId>jsms-client</artifactId>
-    <version>0.0.2</version>
+    <version>1.1.0</version>
 </dependency>
 <dependency>
 	<groupId>com.google.code.gson</groupId>
 	<artifactId>gson</artifactId>
-	<version>2.2.4</version>
+	<version>2.3</version>
 </dependency>
 <dependency>
 	<groupId>org.slf4j</groupId>
 	<artifactId>slf4j-api</artifactId>
-	<version>1.7.5</version>
+	<version>1.7.7</version>
 </dependency>
 <dependency>
 	<groupId>cn.jiguang.common</groupId>
 	<artifactId>jiguang-common-client</artifactId>
-	<version>0.1.4</version>
+	<version>0.1.6</version>
+	<exclusions>
+            <exclusion>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-jdk14</artifactId>
+            </exclusion>
+            <exclusion>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-nop</artifactId>
+            </exclusion>
+        </exclusions>
 </dependency>
 <!-- For log4j -->
 <dependency>
 	<groupId>org.slf4j</groupId>
 	<artifactId>slf4j-log4j12</artifactId>
-	<version>1.7.5</version>
+	<version>1.7.7</version>
 </dependency>
 <dependency>
 	<groupId>log4j</groupId>
 	<artifactId>log4j</artifactId>
-	<version>1.2.16</version>
+	<version>1.2.17</version>
 </dependency>
 ```
 
