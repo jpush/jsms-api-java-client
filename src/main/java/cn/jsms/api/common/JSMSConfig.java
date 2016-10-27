@@ -1,6 +1,6 @@
 package cn.jsms.api.common;
 
-import cn.jiguang.commom.ClientConfig;
+import cn.jiguang.common.ClientConfig;
 
 public class JSMSConfig {
 
@@ -13,6 +13,10 @@ public class JSMSConfig {
 	public final static String CODE_PATH = "sms.code.path";
 	
 	public final static String VALID_PATH = "sms.valid.path";
+
+	public final static String VOICE_CODE_PATH = "sms.voice.code.path";
+
+	public final static String TEMP_MESSAGE_PATH = "sms.temp.message.path";
 	
 	public static final String MAX_RETRY_TIMES = ClientConfig.MAX_RETRY_TIMES;
 	
@@ -22,6 +26,8 @@ public class JSMSConfig {
 		clientConfig.put(API_HOST_NAME, "https://api.sms.jpush.cn");
 		clientConfig.put(CODE_PATH, "/v1/codes");
 		clientConfig.put(VALID_PATH, "/valid");
+		clientConfig.put(VOICE_CODE_PATH, "/v1/voice_codes");
+		clientConfig.put(TEMP_MESSAGE_PATH, "/v1/messages");
 		clientConfig.put(MAX_RETRY_TIMES, 3);
         clientConfig.put(SEND_VERSION, 1);
 	}

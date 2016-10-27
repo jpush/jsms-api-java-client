@@ -28,4 +28,14 @@ public class JSMSClient {
 		throws APIConnectionException, APIRequestException {
 		return _smsClient.sendValidSMSCode(msgId, code);
 	}
+
+	public SendSMSResult sendVoiceSMSCode(SMSPayload payload)
+		throws APIConnectionException, APIRequestException {
+		return _smsClient.sendVoiceSMSCode(payload);
+	}
+
+	public SendSMSResult sendTemplateSMS(SMSPayload payload)
+		throws APIConnectionException, APIRequestException {
+		return _smsClient.sendTemplateSMS(payload);
+	}
 }
