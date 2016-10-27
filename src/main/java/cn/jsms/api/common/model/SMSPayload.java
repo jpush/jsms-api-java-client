@@ -11,8 +11,6 @@ import com.google.gson.JsonObject;
 import cn.jiguang.common.utils.Preconditions;
 import cn.jiguang.common.utils.StringUtils;
 import com.google.gson.JsonPrimitive;
-import okhttp3.OkHttpClient;
-import okio.Buffer;
 
 
 public class SMSPayload implements IModel {

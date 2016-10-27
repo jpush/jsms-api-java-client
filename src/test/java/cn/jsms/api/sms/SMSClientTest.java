@@ -3,8 +3,6 @@ package cn.jsms.api.sms;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonPrimitive;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
