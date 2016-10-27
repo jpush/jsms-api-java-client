@@ -3,7 +3,7 @@
 
 	<groupId>cn.jpush.api</groupId>
 	<artifactId>jsms-client</artifactId>
-	<version>0.0.3-SNAPSHOT</version>
+	<version>1.1.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<name>jsms-client</name>
@@ -23,11 +23,11 @@
 		<version>9</version>
 	</parent>
 	
-		<scm>
+	<scm>
 		<url>https://github.com/jpush/jsms-api-java-client</url>
 		<connection>scm:git:git@github.com:jpush/jsms-api-java-client.git</connection>
 		<developerConnection>scm:git:git@github.com:jpush/jsms-api-java-client.git</developerConnection>
-		<tag>v0.0.2</tag>
+		<tag>v1.1.0</tag>
 	</scm>
 
 	<properties>
@@ -39,32 +39,20 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>org.apache.maven.plugins</groupId>
-			<artifactId>maven-release-plugin</artifactId>
-			<version>2.5.3</version>
-			<type>maven-plugin</type>
+			<groupId>cn.jpush.api</groupId>
+			<artifactId>jiguang-common</artifactId>
+			<version>0.1.6</version>
 			<exclusions>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-jdk14</artifactId>
+				</exclusion>
 				<exclusion>
 					<groupId>org.slf4j</groupId>
 					<artifactId>slf4j-nop</artifactId>
 				</exclusion>
-				<exclusion>
-					<groupId>org.slf4f</groupId>
-					<artifactId>slf4j-jdk14</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.slf4f</groupId>
-					<artifactId>jcl-over-slf4j</artifactId>
-				</exclusion>
 			</exclusions>
 		</dependency>
-
-		<dependency>
-			<groupId>cn.jpush.api</groupId>
-			<artifactId>jiguang-common</artifactId>
-			<version>0.1.2</version>
-		</dependency>
-
 		<dependency>
 			<groupId>com.google.code.gson</groupId>
 			<artifactId>gson</artifactId>

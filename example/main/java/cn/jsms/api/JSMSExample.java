@@ -19,6 +19,8 @@ public class JSMSExample {
     public static void main(String[] args) {
     	testSendSMSCode();
 //    	testSendValidSMSCode();
+        testSendVoiceSMSCode();
+        testSendTemplateSMS();
     }
     
     public static void testSendSMSCode() {
@@ -52,5 +54,45 @@ public class JSMSExample {
             LOG.info("Error Message: " + e.getMessage());
         }
 	}
+
+    /**
+     *  The default value of ttl is 60 seconds.
+     */
+	public static void testSendVoiceSMSCode() {
+	    SMSClient client = new SMSClient(masterSecret, appkey);
+        SMSPayload payload = SMSPayload.newBuilder()
+                .setMobildNumber("13800138000")
+                .setTTL(90)
+                .build();
+        try {
+            SendSMSResult res = client.sendVoiceSMSCode(payload);
+            LOG.info(res.toString());
+        } catch (APIRequestException e) {
+            LOG.error("Error response from JPush server. Should review and fix it. ", e);
+            LOG.info("HTTP Status: " + e.getStatus());
+            LOG.info("Error Message: " + e.getMessage());
+        } catch (APIConnectionException e) {
+            LOG.error("Connection error. Should retry later. ", e);
+        }
+    }
+
+	public static void testSendTemplateSMS() {
+	    SMSClient client = new SMSClient(masterSecret, appkey);
+        SMSPayload payload = SMSPayload.newBuilder()
+                .setMobildNumber("13800138000")
+                .setTempId(1)
+                .addTempPara("test", "jpush")
+                .build();
+        try {
+            SendSMSResult res = client.sendTemplateSMS(payload);
+            LOG.info(res.toString());
+        } catch (APIRequestException e) {
+            LOG.error("Error response from JPush server. Should review and fix it. ", e);
+            LOG.info("HTTP Status: " + e.getStatus());
+            LOG.info("Error Message: " + e.getMessage());
+        } catch (APIConnectionException e) {
+            LOG.error("Connection error. Should retry later. ", e);
+        }
+    }
     
 }

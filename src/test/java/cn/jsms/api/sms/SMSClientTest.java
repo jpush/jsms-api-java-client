@@ -20,6 +20,9 @@ import cn.jsms.api.ValidSMSResult;
 import cn.jsms.api.common.SMSClient;
 import cn.jsms.api.common.model.SMSPayload;
 
+import java.util.HashMap;
+import java.util.Map;
+
 
 @Category(SlowTests.class)
 public class SMSClientTest extends BaseTest {
@@ -208,6 +211,107 @@ public class SMSClientTest extends BaseTest {
 		try {
 			client.sendValidSMSCode("5d7f4f78-5f41-4025-a253-50bc9a3ae1d6", "1234567");
 		} catch (APIConnectionException e) {
+            LOG.error("Connection error. Should retry later. ", e);
+        } catch (APIRequestException e) {
+            LOG.error("Error response from JPush server. Should review and fix it. ", e);
+            LOG.info("HTTP Status: " + e.getStatus());
+            LOG.info("Error Message: " + e.getMessage());
+        }
+	}
+
+	@Test
+    public void testSendVoiceSMSCode() {
+        SMSPayload payload = SMSPayload.newBuilder()
+                .setMobildNumber("13570210796")
+                .build();
+
+        JsonObject json = new JsonObject();
+        json.addProperty("mobile", "13570210796");
+        assertEquals(payload.toJSON(), json);
+
+        try {
+            SendSMSResult res = client.sendVoiceSMSCode(payload);
+            LOG.info(res.toString());
+        } catch (APIRequestException e) {
+            LOG.error("Error response from JPush server. Should review and fix it. ", e);
+            LOG.info("HTTP Status: " + e.getStatus());
+            LOG.info("Error Message: " + e.getMessage());
+        } catch (APIConnectionException e) {
+            LOG.error("Connection error. Should retry later. ", e);
+        }
+    }
+
+	@Test
+	public void testSendTempSMS() {
+		SMSPayload payload = SMSPayload.newBuilder()
+				.setMobildNumber("13800138000")
+				.setTempId(5118)
+				.addTempPara("test", "jpush")
+				.build();
+
+		JsonObject json = new JsonObject();
+		json.addProperty("mobile", "13800138000");
+		json.addProperty("temp_id", 5118);
+		JsonObject tempJson = new JsonObject();
+		tempJson.addProperty("test", "jpush");
+		json.add("temp_para", tempJson);
+		assertEquals(payload.toJSON(), json);
+
+		try {
+			SendSMSResult res = client.sendTemplateSMS(payload);
+			assertTrue(res.isResultOK());
+			LOG.info(res.toString());
+		} catch (APIConnectionException e) {
+			LOG.error("Connection error. Should retry later. ", e);
+		} catch (APIRequestException e) {
+			LOG.error("Error response from JPush server. Should review and fix it. ", e);
+			LOG.info("HTTP Status: " + e.getStatus());
+			LOG.info("Error Message: " + e.getMessage());
+		}
+	}
+
+    @Test
+    public void testSendTempSMS_withMap() {
+        Map<String, String> test = new HashMap<String, String>();
+        test.put("test", "jpush");
+        SMSPayload payload = SMSPayload.newBuilder()
+                .setMobildNumber("13800138000")
+                .setTempId(5118)
+                .setTempPara(test)
+                .build();
+
+        JsonObject json = new JsonObject();
+        json.addProperty("mobile", "13800138000");
+        json.addProperty("temp_id", 5118);
+        JsonObject tempJson = new JsonObject();
+        tempJson.addProperty("test", "jpush");
+        json.add("temp_para", tempJson);
+        assertEquals(payload.toJSON(), json);
+
+        try {
+            SendSMSResult res = client.sendTemplateSMS(payload);
+            assertTrue(res.isResultOK());
+            LOG.info(res.toString());
+        } catch (APIConnectionException e) {
+            LOG.error("Connection error. Should retry later. ", e);
+        } catch (APIRequestException e) {
+            LOG.error("Error response from JPush server. Should review and fix it. ", e);
+            LOG.info("HTTP Status: " + e.getStatus());
+            LOG.info("Error Message: " + e.getMessage());
+        }
+    }
+
+	@Test
+	public void testSendTempSMS_tempParaNull() {
+        SMSPayload payload = SMSPayload.newBuilder()
+                .setMobildNumber("13800138000")
+                .setTempId(5118)
+                .build();
+        try {
+            SendSMSResult res = client.sendTemplateSMS(payload);
+            assertTrue(res.getResponseCode() == 403);
+            LOG.info(res.toString());
+        } catch (APIConnectionException e) {
             LOG.error("Connection error. Should retry later. ", e);
         } catch (APIRequestException e) {
             LOG.error("Error response from JPush server. Should review and fix it. ", e);
