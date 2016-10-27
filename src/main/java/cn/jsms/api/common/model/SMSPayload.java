@@ -29,7 +29,7 @@ public class SMSPayload implements IModel {
 	private static Gson gson = new Gson();
 	private static final Pattern MOBILE_PATTERN = Pattern.compile("^(((13[0-9])|(14[57])|(15[012356789])|(17[6-8])|(18[0-9]))\\d{8})|((1700)|(1705)|(1709))\\d{7}$");
 
-	public SMSPayload(String mobileNumber, int tempId, int ttl, Map<String, String> temp_para) {
+	private SMSPayload(String mobileNumber, int tempId, int ttl, Map<String, String> temp_para) {
 		this.mobile = mobileNumber;
 		this.temp_id = tempId;
         this.ttl = ttl;
