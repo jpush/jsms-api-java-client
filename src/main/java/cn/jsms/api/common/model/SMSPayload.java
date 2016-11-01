@@ -27,7 +27,6 @@ public class SMSPayload implements IModel {
 	private final Map<String, String> temp_para;
 
 	private static Gson gson = new Gson();
-	private static final Pattern MOBILE_PATTERN = Pattern.compile("^(((13[0-9])|(14[57])|(15[012356789])|(17[6-8])|(18[0-9]))\\d{8})|((1700)|(1705)|(1709))\\d{7}$");
 
 	private SMSPayload(String mobileNumber, int tempId, int ttl, Map<String, String> temp_para) {
 		this.mobile = mobileNumber;
@@ -84,13 +83,6 @@ public class SMSPayload implements IModel {
 		public SMSPayload build() {
 			Preconditions.checkArgument(null != mobile, "mobile number should not be null");
 			Preconditions.checkArgument(StringUtils.isNotEmpty(mobile), "mobile number should not be empty");
-			
-			byte[] mobileByte = mobile.getBytes();
-			if (mobileByte.length != 11) {
-				throw new IllegalArgumentException("The length of mobile equals 11. Input is " + mobile);
-			}
-			Preconditions.checkArgument(checkMobile(mobile), "invalid mobile number, please check again");
-
             Preconditions.checkArgument(ttl >= 0, "ttl should not less 0");
             Preconditions.checkArgument(temp_id >= 0, "temp id should not less 0");
 
@@ -98,10 +90,6 @@ public class SMSPayload implements IModel {
 		}
 	}
 	
-	public static boolean checkMobile(String mobile) {
-        return MOBILE_PATTERN.matcher(mobile).matches();
-    }
-
 	public JsonElement toJSON() {
 		JsonObject json = new JsonObject();
 

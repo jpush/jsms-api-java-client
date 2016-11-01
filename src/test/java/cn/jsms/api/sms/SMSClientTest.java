@@ -87,58 +87,7 @@ public class SMSClientTest extends BaseTest {
 		
 		assertEquals(payload.toJSON(), json);
 	}
-	
-	/**
-	 * mobile number less than 11
-	 */
-	@Test(expected = IllegalArgumentException.class)
-	public void testSendSMSCode_InvalidMobile1() {
-		SMSPayload payload = SMSPayload.newBuilder()
-				.setMobildNumber("1382")
-				.setTempId(1)
-				.build();
-		
-		JsonObject json = new JsonObject();
-		json.addProperty("mobile", "1382");
-		json.addProperty("temp_id", 1);
-		
-		assertEquals(payload.toJSON(), json);
-	}
-	
-	/**
-	 * mobile number more than 11
-	 */
-	@Test(expected = IllegalArgumentException.class)
-	public void testSendSMSCode_InvalidMobile2() {
-		SMSPayload payload = SMSPayload.newBuilder()
-				.setMobildNumber("138000000000")
-				.setTempId(1)
-				.build();
-		
-		JsonObject json = new JsonObject();
-		json.addProperty("mobile", "138000000000");
-		json.addProperty("temp_id", 1);
-		
-		assertEquals(payload.toJSON(), json);
-	}
-	
-	/**
-	 * invalid mobile number
-	 */
-	@Test(expected = IllegalArgumentException.class)
-	public void testSendSMSCode_InvalidMobile3() {
-		SMSPayload payload = SMSPayload.newBuilder()
-				.setMobildNumber("17033839139")
-				.setTempId(1)
-				.build();
-		
-		JsonObject json = new JsonObject();
-		json.addProperty("mobile", "1703839139");
-		json.addProperty("temp_id", 1);
-		
-		assertEquals(payload.toJSON(), json);
-	}
-	
+
 	@Test(expected = IllegalArgumentException.class)
 	public void testSendSMSCode_TempIdNegative() {
 		SMSPayload payload = SMSPayload.newBuilder()
@@ -210,11 +159,11 @@ public class SMSClientTest extends BaseTest {
 	@Test
     public void testSendVoiceSMSCode() {
         SMSPayload payload = SMSPayload.newBuilder()
-                .setMobildNumber("13570210796")
+                .setMobildNumber("13800138000")
                 .build();
 
         JsonObject json = new JsonObject();
-        json.addProperty("mobile", "13570210796");
+        json.addProperty("mobile", "13800138000");
         assertEquals(payload.toJSON(), json);
 
         try {
