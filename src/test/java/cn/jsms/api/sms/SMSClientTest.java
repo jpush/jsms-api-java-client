@@ -87,7 +87,7 @@ public class SMSClientTest extends BaseTest {
 		
 		assertEquals(payload.toJSON(), json);
 	}
-	
+
 	@Test(expected = IllegalArgumentException.class)
 	public void testSendSMSCode_TempIdNegative() {
 		SMSPayload payload = SMSPayload.newBuilder()

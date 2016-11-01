@@ -83,12 +83,6 @@ public class SMSPayload implements IModel {
 		public SMSPayload build() {
 			Preconditions.checkArgument(null != mobile, "mobile number should not be null");
 			Preconditions.checkArgument(StringUtils.isNotEmpty(mobile), "mobile number should not be empty");
-			
-			byte[] mobileByte = mobile.getBytes();
-			if (mobileByte.length != 11) {
-				throw new IllegalArgumentException("The length of mobile equals 11. Input is " + mobile);
-			}
-
             Preconditions.checkArgument(ttl >= 0, "ttl should not less 0");
             Preconditions.checkArgument(temp_id >= 0, "temp id should not less 0");
 
