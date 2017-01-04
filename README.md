@@ -13,7 +13,7 @@
 
 ```Java
 <dependency>
-    <groupId>cn.jsms.api</groupId>
+    <groupId>cn.jpush.api</groupId>
     <artifactId>jsms-client</artifactId>
     <version>1.1.1</version>
 </dependency>
