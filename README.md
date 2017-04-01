@@ -13,7 +13,7 @@
 
 ```Java
 <dependency>
-    <groupId>cn.jsms.api</groupId>
+    <groupId>cn.jpush.api</groupId>
     <artifactId>jsms-client</artifactId>
     <version>1.1.1</version>
 </dependency>
@@ -28,19 +28,9 @@
 	<version>1.7.7</version>
 </dependency>
 <dependency>
-	<groupId>cn.jiguang.common</groupId>
-	<artifactId>jiguang-common-client</artifactId>
-	<version>0.1.6</version>
-	<exclusions>
-            <exclusion>
-                <groupId>org.slf4j</groupId>
-                <artifactId>slf4j-jdk14</artifactId>
-            </exclusion>
-            <exclusion>
-                <groupId>org.slf4j</groupId>
-                <artifactId>slf4j-nop</artifactId>
-            </exclusion>
-        </exclusions>
+    <groupId>cn.jpush.api</groupId>
+    <artifactId>jiguang-common</artifactId>
+    <version>1.0.3</version>
 </dependency>
 <!-- For log4j -->
 <dependency>
