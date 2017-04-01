@@ -18,6 +18,10 @@ public class JSMSClient {
 	public JSMSClient(String masterSecret, String appkey, HttpProxy proxy, JSMSConfig conf) {
 		_smsClient = new SMSClient(masterSecret, appkey, proxy, conf);
 	}
+
+	public SMSClient getSMSClient() {
+		return this._smsClient;
+	}
 	
 	public SendSMSResult sendSMSCode(SMSPayload payload) 
 		throws APIConnectionException, APIRequestException {

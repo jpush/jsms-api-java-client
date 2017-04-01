@@ -2,6 +2,8 @@ package cn.jsms.api.common;
 
 import java.util.regex.Pattern;
 
+import cn.jiguang.common.connection.IHttpClient;
+import cn.jiguang.common.connection.NettyHttpClient;
 import com.google.gson.JsonObject;
 
 import cn.jiguang.common.ServiceHelper;
@@ -24,7 +26,7 @@ public class SMSClient {
 	private String _validPath;
 	private String _voiceCodePath;
 	private String _tempMsgPath;
-	private NativeHttpClient _httpClient;
+	private IHttpClient _httpClient;
 	
 	public SMSClient(String masterSecret, String appkey) {
         this(masterSecret, appkey, null, JSMSConfig.getInstance());
@@ -108,5 +110,16 @@ public class SMSClient {
 
 		ResponseWrapper response = _httpClient.sendPost(_baseUrl + _tempMsgPath, payload.toString());
 		return SendSMSResult.fromResponse(response, SendSMSResult.class);
+	}
+
+	public void setHttpClient(IHttpClient client) {
+		this._httpClient = client;
+	}
+
+	// 如果使用 NettyHttpClient，在发送请求后需要手动调用 close 方法
+	public void close() {
+		if (_httpClient != null && _httpClient instanceof NettyHttpClient) {
+			((NettyHttpClient) _httpClient).close();
+		}
 	}
 }
