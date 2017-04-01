@@ -15,7 +15,7 @@
 <dependency>
     <groupId>cn.jpush.api</groupId>
     <artifactId>jsms-client</artifactId>
-    <version>1.1.1</version>
+    <version>1.2.0</version>
 </dependency>
 <dependency>
 	<groupId>com.google.code.gson</groupId>
@@ -30,7 +30,7 @@
 <dependency>
     <groupId>cn.jpush.api</groupId>
     <artifactId>jiguang-common</artifactId>
-    <version>1.0.3</version>
+    <version>1.0.5</version>
 </dependency>
 <!-- For log4j -->
 <dependency>
