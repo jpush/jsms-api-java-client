@@ -48,8 +48,13 @@ public class JSMSExample {
     public static void testSendSMSWithIHttpClient() {
         SMSClient client = new SMSClient(masterSecret, appkey);
         String authCode = ServiceHelper.getBasicAuthorization(appkey, masterSecret);
-        ApacheHttpClient apacheHttpClient = new ApacheHttpClient(authCode, null, ClientConfig.getInstance());
-        client.setHttpClient(apacheHttpClient);
+        ApacheHttpClient httpClient = new ApacheHttpClient(authCode, null, ClientConfig.getInstance());
+        // NettyHttpClient httpClient = new NettyHttpClient(authCode, null, ClientConfig.getInstance());
+        // ApacheHttpClient httpClient = new ApacheHttpClient(authCode, null, ClientConfig.getInstance());
+        // 可以切换 HttpClient，默认使用的是 NativeHttpClient
+        client.setHttpClient(httpClient);
+        // 如果使用 NettyHttpClient，发送完请求后要调用 close 方法
+        // client.close();
         SMSPayload payload = SMSPayload.newBuilder()
                 .setMobildNumber("13800138000")
                 .setTempId(1)
