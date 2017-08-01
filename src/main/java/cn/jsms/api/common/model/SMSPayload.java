@@ -2,15 +2,15 @@ package cn.jsms.api.common.model;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 import java.util.regex.Pattern;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
+import cn.jiguang.common.utils.TimeUtils;
+import cn.jsms.api.schedule.model.RecipientPayload;
+import com.google.gson.*;
 
 import cn.jiguang.common.utils.Preconditions;
 import cn.jiguang.common.utils.StringUtils;
-import com.google.gson.JsonPrimitive;
 
 
 public class SMSPayload implements IModel {
@@ -45,7 +45,7 @@ public class SMSPayload implements IModel {
         private int ttl;
 		private Map<String, String> tempParaBuilder;
 
-		public Builder setMobildNumber(String mobileNumber) {
+		public Builder setMobileNumber(String mobileNumber) {
 			this.mobile = mobileNumber.trim();
 			return this;
 		}
@@ -109,7 +109,11 @@ public class SMSPayload implements IModel {
 		if (null != temp_para) {
 			tempJson = new JsonObject();
 			for (String key : temp_para.keySet()) {
-				tempJson.add(key, new JsonPrimitive(temp_para.get(key)));
+                if (temp_para.get(key) != null) {
+                    tempJson.add(key, new JsonPrimitive(temp_para.get(key)));
+                } else {
+                    tempJson.add(key, JsonNull.INSTANCE);
+                }
 			}
 		}
 
@@ -124,5 +128,4 @@ public class SMSPayload implements IModel {
 	public String toString() {
 		return gson.toJson(toJSON());
 	}
-
 }

@@ -3,6 +3,13 @@ package cn.jsms.api;
 import cn.jiguang.common.ClientConfig;
 import cn.jiguang.common.ServiceHelper;
 import cn.jiguang.common.connection.ApacheHttpClient;
+import cn.jiguang.common.resp.ResponseWrapper;
+import cn.jsms.api.account.AccountBalanceResult;
+import cn.jsms.api.account.AppBalanceResult;
+import cn.jsms.api.schedule.model.RecipientPayload;
+import cn.jsms.api.schedule.model.ScheduleListResult;
+import cn.jsms.api.schedule.model.ScheduleResult;
+import cn.jsms.api.schedule.model.ScheduleSMSPayload;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,6 +18,9 @@ import cn.jiguang.common.resp.APIRequestException;
 import cn.jsms.api.common.SMSClient;
 import cn.jsms.api.common.model.SMSPayload;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class JSMSExample {
 
@@ -18,6 +28,9 @@ public class JSMSExample {
 
     private static final String appkey = "242780bfdd7315dc1989fe2b";
     private static final String masterSecret = "2f5ced2bef64167950e63d13";
+
+    private static final String devKey = "242780bfdd7315dc1989fedb";
+    private static final String devSecret = "2f5ced2bef64167950e63d13";
     
     public static void main(String[] args) {
 //    	testSendSMSCode();
@@ -29,7 +42,7 @@ public class JSMSExample {
     public static void testSendSMSCode() {
     	SMSClient client = new SMSClient(masterSecret, appkey);
     	SMSPayload payload = SMSPayload.newBuilder()
-				.setMobildNumber("13800138000")
+				.setMobileNumber("13800138000")
 				.setTempId(1)
 				.build();
     	try {
@@ -56,7 +69,7 @@ public class JSMSExample {
         // 如果使用 NettyHttpClient，发送完请求后要调用 close 方法
         // client.close();
         SMSPayload payload = SMSPayload.newBuilder()
-                .setMobildNumber("13800138000")
+                .setMobileNumber("13800138000")
                 .setTempId(1)
                 .build();
         try {
@@ -100,7 +113,7 @@ public class JSMSExample {
 	public static void testSendVoiceSMSCode() {
 	    SMSClient client = new SMSClient(masterSecret, appkey);
         SMSPayload payload = SMSPayload.newBuilder()
-                .setMobildNumber("13800138000")
+                .setMobileNumber("13800138000")
                 .setTTL(90)
                 .build();
         try {
@@ -118,7 +131,7 @@ public class JSMSExample {
 	public static void testSendTemplateSMS() {
 	    SMSClient client = new SMSClient(masterSecret, appkey);
         SMSPayload payload = SMSPayload.newBuilder()
-                .setMobildNumber("13800138000")
+                .setMobileNumber("13800138000")
                 .setTempId(1)
                 .addTempPara("test", "jpush")
                 .build();
@@ -131,6 +144,150 @@ public class JSMSExample {
             LOG.info("Error Message: " + e.getMessage());
         } catch (APIConnectionException e) {
             LOG.error("Connection error. Should retry later. ", e);
+        }
+    }
+
+    public static void testSendScheduleSMS() {
+        SMSClient client = new SMSClient(masterSecret, appkey);
+        ScheduleSMSPayload payload = ScheduleSMSPayload.newBuilder()
+                .setMobileNumber("13800138000")
+                .setTempId(1111)
+                .setSendTime("2017-07-31 16:17:00")
+                .addTempPara("number", "798560")
+                .build();
+        try {
+            ScheduleResult result = client.sendScheduleSMS(payload);
+            LOG.info(result.toString());
+        } catch (APIConnectionException e) {
+            LOG.error("Connection error. Should retry later. ", e);
+        } catch (APIRequestException e) {
+            LOG.error("Error response from JPush server. Should review and fix it. ", e);
+            LOG.info("HTTP Status: " + e.getStatus());
+            LOG.info("Error Message: " + e.getMessage());
+        }
+    }
+
+    public static void testUpdateScheduleSMS() {
+        SMSClient client = new SMSClient(masterSecret, appkey);
+        ScheduleSMSPayload payload = ScheduleSMSPayload.newBuilder()
+                .setMobileNumber("13800138000")
+                .setTempId(1111)
+                .setSendTime("2017-07-31 15:00:00")
+                .addTempPara("number", "110110")
+                .build();
+        try {
+            ScheduleResult result = client.updateScheduleSMS(payload, "dsfd");
+            LOG.info(result.toString());
+        } catch (APIConnectionException e) {
+            LOG.error("Connection error. Should retry later. ", e);
+        } catch (APIRequestException e) {
+            LOG.error("Error response from JPush server. Should review and fix it. ", e);
+            LOG.info("HTTP Status: " + e.getStatus());
+            LOG.info("Error Message: " + e.getMessage());
+        }
+    }
+
+    public static void testSendBatchScheduleSMS() {
+        SMSClient client = new SMSClient(masterSecret, appkey);
+        List<RecipientPayload> list = new ArrayList<RecipientPayload>();
+        RecipientPayload recipientPayload1 = new RecipientPayload.Builder()
+                .setMobile("13800138000")
+                .addTempPara("number", "638938")
+                .build();
+        RecipientPayload recipientPayload2 = new RecipientPayload.Builder()
+                .setMobile("13800138001")
+                .addTempPara("number", "829302")
+                .build();
+        list.add(recipientPayload1);
+        list.add(recipientPayload2);
+        RecipientPayload[] recipientPayloads = new RecipientPayload[list.size()];
+        ScheduleSMSPayload smsPayload = ScheduleSMSPayload.newBuilder()
+                .setSendTime("2017-07-31 16:00:00")
+                .setTempId(1245)
+                .setRecipients(list.toArray(recipientPayloads))
+                .build();
+        try {
+            ScheduleListResult result = client.sendBatchScheduleSMS(smsPayload);
+            LOG.info(result.toString());
+        } catch (APIConnectionException e) {
+            LOG.error("Connection error. Should retry later. ", e);
+        } catch (APIRequestException e) {
+            LOG.error("Error response from JPush server. Should review and fix it. ", e);
+            LOG.info("HTTP Status: " + e.getStatus());
+            LOG.info("Error Message: " + e.getMessage());
+        }
+    }
+
+    public static void testUpdateBatchScheduleSMS() {
+        SMSClient client = new SMSClient(masterSecret, appkey);
+        List<RecipientPayload> list = new ArrayList<RecipientPayload>();
+        RecipientPayload recipientPayload1 = new RecipientPayload.Builder()
+                .setMobile("13800138000")
+                .addTempPara("number", "328393")
+                .build();
+        RecipientPayload recipientPayload2 = new RecipientPayload.Builder()
+                .setMobile("13800138001")
+                .addTempPara("number", "489042")
+                .build();
+        list.add(recipientPayload1);
+        list.add(recipientPayload2);
+        RecipientPayload[] recipientPayloads = new RecipientPayload[list.size()];
+        ScheduleSMSPayload smsPayload = ScheduleSMSPayload.newBuilder()
+                .setSendTime("2017-07-31 16:00:00")
+                .setTempId(1245)
+                .setRecipients(list.toArray(recipientPayloads))
+                .build();
+        try {
+            ScheduleListResult result = client.updateBatchScheduleSMS(smsPayload, "dfs");
+            LOG.info(result.toString());
+        } catch (APIConnectionException e) {
+            LOG.error("Connection error. Should retry later. ", e);
+        } catch (APIRequestException e) {
+            LOG.error("Error response from JPush server. Should review and fix it. ", e);
+            LOG.info("HTTP Status: " + e.getStatus());
+            LOG.info("Error Message: " + e.getMessage());
+        }
+    }
+
+    public static void testDeleteScheduleSMS() {
+        SMSClient client = new SMSClient(masterSecret, appkey);
+        try {
+            ResponseWrapper result = client.deleteScheduleSMS("sd");
+            LOG.info("Response content: " + result.responseContent + " response code: " + result.responseCode);
+        } catch (APIConnectionException e) {
+            LOG.error("Connection error. Should retry later. ", e);
+        } catch (APIRequestException e) {
+            LOG.error("Error response from JPush server. Should review and fix it. ", e);
+            LOG.info("HTTP Status: " + e.getStatus());
+            LOG.info("Error Message: " + e.getMessage());
+        }
+    }
+
+    public static void testGetAccountSMSBalance() {
+        SMSClient client = new SMSClient(devSecret, devKey);
+        try {
+            AccountBalanceResult result = client.getSMSBalance();
+            LOG.info(result.toString());
+        } catch (APIConnectionException e) {
+            LOG.error("Connection error. Should retry later. ", e);
+        } catch (APIRequestException e) {
+            LOG.error("Error response from JPush server. Should review and fix it. ", e);
+            LOG.info("HTTP Status: " + e.getStatus());
+            LOG.info("Error Message: " + e.getMessage());
+        }
+    }
+
+    public static void testGetAppSMSBalance() {
+        SMSClient client = new SMSClient(masterSecret, appkey);
+        try {
+            AppBalanceResult result = client.getAppSMSBalance();
+            LOG.info(result.toString());
+        } catch (APIConnectionException e) {
+            LOG.error("Connection error. Should retry later. ", e);
+        } catch (APIRequestException e) {
+            LOG.error("Error response from JPush server. Should review and fix it. ", e);
+            LOG.info("HTTP Status: " + e.getStatus());
+            LOG.info("Error Message: " + e.getMessage());
         }
     }
     
