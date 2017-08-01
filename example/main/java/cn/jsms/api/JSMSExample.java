@@ -9,6 +9,7 @@ import cn.jsms.api.account.AppBalanceResult;
 import cn.jsms.api.schedule.model.RecipientPayload;
 import cn.jsms.api.schedule.model.ScheduleListResult;
 import cn.jsms.api.schedule.model.ScheduleResult;
+import cn.jsms.api.schedule.model.ScheduleSMSPayload;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,6 +28,9 @@ public class JSMSExample {
 
     private static final String appkey = "242780bfdd7315dc1989fe2b";
     private static final String masterSecret = "2f5ced2bef64167950e63d13";
+
+    private static final String devKey = "242780bfdd7315dc1989fedb";
+    private static final String devSecret = "2f5ced2bef64167950e63d13";
     
     public static void main(String[] args) {
 //    	testSendSMSCode();
@@ -145,8 +149,8 @@ public class JSMSExample {
 
     public static void testSendScheduleSMS() {
         SMSClient client = new SMSClient(masterSecret, appkey);
-        SMSPayload payload = SMSPayload.newBuilder()
-                .setMobileNumber("13570210796")
+        ScheduleSMSPayload payload = ScheduleSMSPayload.newBuilder()
+                .setMobileNumber("13800138000")
                 .setTempId(1111)
                 .setSendTime("2017-07-31 16:17:00")
                 .addTempPara("number", "798560")
@@ -165,7 +169,7 @@ public class JSMSExample {
 
     public static void testUpdateScheduleSMS() {
         SMSClient client = new SMSClient(masterSecret, appkey);
-        SMSPayload payload = SMSPayload.newBuilder()
+        ScheduleSMSPayload payload = ScheduleSMSPayload.newBuilder()
                 .setMobileNumber("13800138000")
                 .setTempId(1111)
                 .setSendTime("2017-07-31 15:00:00")
@@ -197,10 +201,10 @@ public class JSMSExample {
         list.add(recipientPayload1);
         list.add(recipientPayload2);
         RecipientPayload[] recipientPayloads = new RecipientPayload[list.size()];
-        SMSPayload smsPayload = SMSPayload.newBuilder()
+        ScheduleSMSPayload smsPayload = ScheduleSMSPayload.newBuilder()
                 .setSendTime("2017-07-31 16:00:00")
                 .setTempId(1245)
-                .setRecipients(recipientPayloads)
+                .setRecipients(list.toArray(recipientPayloads))
                 .build();
         try {
             ScheduleListResult result = client.sendBatchScheduleSMS(smsPayload);
@@ -228,10 +232,10 @@ public class JSMSExample {
         list.add(recipientPayload1);
         list.add(recipientPayload2);
         RecipientPayload[] recipientPayloads = new RecipientPayload[list.size()];
-        SMSPayload smsPayload = SMSPayload.newBuilder()
+        ScheduleSMSPayload smsPayload = ScheduleSMSPayload.newBuilder()
                 .setSendTime("2017-07-31 16:00:00")
                 .setTempId(1245)
-                .setRecipients(recipientPayloads)
+                .setRecipients(list.toArray(recipientPayloads))
                 .build();
         try {
             ScheduleListResult result = client.updateBatchScheduleSMS(smsPayload, "dfs");
@@ -260,7 +264,7 @@ public class JSMSExample {
     }
 
     public static void testGetAccountSMSBalance() {
-        SMSClient client = new SMSClient(masterSecret, appkey);
+        SMSClient client = new SMSClient(devSecret, devKey);
         try {
             AccountBalanceResult result = client.getSMSBalance();
             LOG.info(result.toString());

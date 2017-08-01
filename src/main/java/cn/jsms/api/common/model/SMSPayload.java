@@ -15,30 +15,24 @@ import cn.jiguang.common.utils.StringUtils;
 
 public class SMSPayload implements IModel {
 
-	private static String SEND_TIME = "send_time";
 	private static String MOBILE = "mobile";
 	private static String TEMP_ID = "temp_id";
     private static String TTL = "ttl";
 	private static String TEMP_PARA = "temp_para";
-    private static String RECIPIENTS = "recipients";
 
-    private String sendTime;
 	private String mobile;
 	private int temp_id;
     // Time to live parameter, the unit is second.
     private int ttl;
 	private final Map<String, String> temp_para;
-    private JsonArray recipients;
 
 	private static Gson gson = new Gson();
 
-	private SMSPayload(String mobileNumber, int tempId, int ttl, Map<String, String> temp_para, String sendTime, JsonArray recipients) {
+	private SMSPayload(String mobileNumber, int tempId, int ttl, Map<String, String> temp_para) {
 		this.mobile = mobileNumber;
 		this.temp_id = tempId;
         this.ttl = ttl;
 		this.temp_para = temp_para;
-        this.sendTime = sendTime;
-        this.recipients = recipients;
 	}
 
 	public static Builder newBuilder() {
@@ -50,8 +44,6 @@ public class SMSPayload implements IModel {
 		private int temp_id;
         private int ttl;
 		private Map<String, String> tempParaBuilder;
-        private String sendTime;
-        private JsonArray recipients = new JsonArray();
 
 		public Builder setMobileNumber(String mobileNumber) {
 			this.mobile = mobileNumber.trim();
@@ -88,46 +80,18 @@ public class SMSPayload implements IModel {
 			return this;
 		}
 
-		public Builder setSendTime(String sendTime) {
-            Preconditions.checkArgument(null != sendTime, "send time should not be null.");
-            Preconditions.checkArgument(TimeUtils.isDateFormat(sendTime), "The time format is incorrect");
-            this.sendTime = sendTime;
-            return this;
-        }
-
-        public Builder setRecipients(RecipientPayload...recipients) {
-            if (recipients == null) {
-                return this;
-            }
-
-            for (RecipientPayload recipientPayload : recipients) {
-                this.recipients.add(recipientPayload.toJSON());
-            }
-            return this;
-        }
-
-        public Builder addRecipient(RecipientPayload recipientPayload) {
-            Preconditions.checkArgument(null != recipientPayload, "RecipientPayload should not be null");
-            this.recipients.add(recipientPayload.toJSON());
-            return this;
-        }
-
 		public SMSPayload build() {
 			Preconditions.checkArgument(null != mobile, "mobile number should not be null");
 			Preconditions.checkArgument(StringUtils.isNotEmpty(mobile), "mobile number should not be empty");
             Preconditions.checkArgument(ttl >= 0, "ttl should not less 0");
             Preconditions.checkArgument(temp_id >= 0, "temp id should not less 0");
 
-			return new SMSPayload(mobile, temp_id, ttl, tempParaBuilder, sendTime, recipients);
+			return new SMSPayload(mobile, temp_id, ttl, tempParaBuilder);
 		}
 	}
 	
 	public JsonElement toJSON() {
 		JsonObject json = new JsonObject();
-
-        if (null != sendTime) {
-            json.addProperty(SEND_TIME, sendTime);
-        }
 
 		if (null != mobile) {
 			json.addProperty(MOBILE, mobile);
@@ -157,10 +121,6 @@ public class SMSPayload implements IModel {
 			json.add(TEMP_PARA, tempJson);
 		}
 
-		if (null != recipients && recipients.size() > 0) {
-            json.add(RECIPIENTS, recipients);
-        }
-
 		return json;
 	}
 
@@ -168,12 +128,4 @@ public class SMSPayload implements IModel {
 	public String toString() {
 		return gson.toJson(toJSON());
 	}
-
-	public String getSendTime() {
-        return this.sendTime;
-    }
-
-	public JsonArray getRecipients() {
-        return this.recipients;
-    }
 }
