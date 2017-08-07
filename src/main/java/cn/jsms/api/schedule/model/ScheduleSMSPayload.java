@@ -1,9 +1,9 @@
 package cn.jsms.api.schedule.model;
 
 import cn.jiguang.common.utils.Preconditions;
-import cn.jiguang.common.utils.StringUtils;
 import cn.jiguang.common.utils.TimeUtils;
 import cn.jsms.api.common.model.IModel;
+import cn.jsms.api.common.model.RecipientPayload;
 import com.google.gson.*;
 
 import java.util.HashMap;

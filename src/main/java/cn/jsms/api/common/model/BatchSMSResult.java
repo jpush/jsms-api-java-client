@@ -1,4 +1,4 @@
-package cn.jsms.api.schedule.model;
+package cn.jsms.api.common.model;
 
 import cn.jiguang.common.resp.BaseResult;
 import com.google.gson.JsonElement;
@@ -7,7 +7,7 @@ import com.google.gson.annotations.Expose;
 
 import java.util.List;
 
-public class ScheduleListResult extends BaseResult {
+public class BatchSMSResult extends BaseResult {
 
     @Expose String schedule_id;
     @Expose int success_count;

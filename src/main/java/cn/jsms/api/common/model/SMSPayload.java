@@ -2,11 +2,7 @@ package cn.jsms.api.common.model;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
-import java.util.regex.Pattern;
 
-import cn.jiguang.common.utils.TimeUtils;
-import cn.jsms.api.schedule.model.RecipientPayload;
 import com.google.gson.*;
 
 import cn.jiguang.common.utils.Preconditions;

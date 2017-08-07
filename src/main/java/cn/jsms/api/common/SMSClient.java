@@ -7,7 +7,8 @@ import cn.jiguang.common.connection.NettyHttpClient;
 import cn.jiguang.common.utils.StringUtils;
 import cn.jsms.api.account.AccountBalanceResult;
 import cn.jsms.api.account.AppBalanceResult;
-import cn.jsms.api.schedule.model.ScheduleListResult;
+import cn.jsms.api.common.model.BatchSMSPayload;
+import cn.jsms.api.common.model.BatchSMSResult;
 import cn.jsms.api.schedule.model.ScheduleResult;
 import cn.jsms.api.schedule.model.ScheduleSMSPayload;
 import cn.jsms.api.schedule.model.ScheduleSMSResult;
@@ -122,6 +123,20 @@ public class SMSClient {
 		return SendSMSResult.fromResponse(response, SendSMSResult.class);
 	}
 
+    /**
+     * Send a batch of template SMS
+     * @param payload BatchSMSPayload
+     * @return BatchSMSResult
+     * @throws APIConnectionException connect exception
+     * @throws APIRequestException request exception
+     */
+	public BatchSMSResult sendBatchTemplateSMS(BatchSMSPayload payload)
+            throws APIConnectionException, APIRequestException {
+        Preconditions.checkArgument(null != payload, "BatchSMSPayload should not be null");
+        ResponseWrapper responseWrapper = _httpClient.sendPost(_baseUrl + _tempMsgPath + "/batch", payload.toString());
+        return BatchSMSResult.fromResponse(responseWrapper, BatchSMSResult.class);
+    }
+
 	public void setHttpClient(IHttpClient client) {
 		this._httpClient = client;
 	}
@@ -169,33 +184,33 @@ public class SMSClient {
     /**
      * Submit a mission that sending a batch of SMS with schedule
      * @param payload Payload should include sendTime and recipients
-     * @return ScheduleListResult
+     * @return BatchSMSResult
      * @throws APIConnectionException connect exception
      * @throws APIRequestException request exception
      */
-    public ScheduleListResult sendBatchScheduleSMS(ScheduleSMSPayload payload)
+    public BatchSMSResult sendBatchScheduleSMS(ScheduleSMSPayload payload)
             throws APIConnectionException, APIRequestException {
         Preconditions.checkArgument(null != payload, "Schedule SMS payload should not be null");
         Preconditions.checkArgument(null != payload.getRecipients(), "Recipients should not be null");
         ResponseWrapper responseWrapper = _httpClient.sendPost(_baseUrl + _schedulePath + "/batch", payload.toString());
-        return ScheduleListResult.fromResponse(responseWrapper, ScheduleListResult.class);
+        return BatchSMSResult.fromResponse(responseWrapper, BatchSMSResult.class);
     }
 
     /**
      * Update batch of SMS with schedule
      * @param payload ScheduleSMSPayload
      * @param scheduleId id
-     * @return ScheduleListResult
+     * @return BatchSMSResult
      * @throws APIConnectionException connection exception
      * @throws APIRequestException request exception
      */
-    public ScheduleListResult updateBatchScheduleSMS(ScheduleSMSPayload payload, String scheduleId)
+    public BatchSMSResult updateBatchScheduleSMS(ScheduleSMSPayload payload, String scheduleId)
             throws APIConnectionException, APIRequestException {
         Preconditions.checkArgument(null != payload, "Schedule SMS payload should not be null");
         Preconditions.checkArgument(null != payload.getRecipients(), "Recipients should not be null");
         Preconditions.checkArgument(null != scheduleId, "Schedule id should not be null");
         ResponseWrapper responseWrapper = _httpClient.sendPut(_baseUrl + _schedulePath + "/batch/" + scheduleId, payload.toString());
-        return ScheduleListResult.fromResponse(responseWrapper, ScheduleListResult.class);
+        return BatchSMSResult.fromResponse(responseWrapper, BatchSMSResult.class);
     }
 
     /**
