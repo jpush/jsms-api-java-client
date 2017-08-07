@@ -6,8 +6,9 @@ import static org.junit.Assert.assertTrue;
 import cn.jiguang.common.resp.ResponseWrapper;
 import cn.jsms.api.account.AccountBalanceResult;
 import cn.jsms.api.account.AppBalanceResult;
-import cn.jsms.api.schedule.model.RecipientPayload;
-import cn.jsms.api.schedule.model.ScheduleListResult;
+import cn.jsms.api.common.model.BatchSMSPayload;
+import cn.jsms.api.common.model.BatchSMSResult;
+import cn.jsms.api.common.model.RecipientPayload;
 import cn.jsms.api.schedule.model.ScheduleResult;
 import cn.jsms.api.schedule.model.ScheduleSMSPayload;
 import org.junit.Before;
@@ -267,6 +268,36 @@ public class SMSClientTest extends BaseTest {
 	}
 
 	@Test
+    public void testSendBatchTemplateSMS() {
+        List<RecipientPayload> list = new ArrayList<RecipientPayload>();
+        RecipientPayload recipientPayload1 = new RecipientPayload.Builder()
+                .setMobile("13800138000")
+                .addTempPara("code", "638938")
+                .build();
+        RecipientPayload recipientPayload2 = new RecipientPayload.Builder()
+                .setMobile("13800138000")
+                .addTempPara("code", "829302")
+                .build();
+        list.add(recipientPayload1);
+        list.add(recipientPayload2);
+        RecipientPayload[] recipientPayloads = new RecipientPayload[list.size()];
+        BatchSMSPayload smsPayload = BatchSMSPayload.newBuilder()
+                .setTempId(1)
+                .setRecipients(list.toArray(recipientPayloads))
+                .build();
+        try {
+            BatchSMSResult result = client.sendBatchTemplateSMS(smsPayload);
+            LOG.info("Got result: " + result);
+        } catch (APIConnectionException e) {
+            LOG.error("Connection error. Should retry later. ", e);
+        } catch (APIRequestException e) {
+            LOG.error("Error response from JPush server. Should review and fix it. ", e);
+            LOG.info("HTTP Status: " + e.getStatus());
+            LOG.info("Error Message: " + e.getMessage());
+        }
+    }
+
+	@Test
     public void testSendScheduleSMS() {
         ScheduleSMSPayload payload = ScheduleSMSPayload.newBuilder()
                 .setMobileNumber("13800138000")
@@ -326,7 +357,7 @@ public class SMSClientTest extends BaseTest {
                 .setRecipients(list.toArray(recipientPayloads))
                 .build();
         try {
-            ScheduleListResult result = client.sendBatchScheduleSMS(smsPayload);
+            BatchSMSResult result = client.sendBatchScheduleSMS(smsPayload);
             LOG.info(result.toString());
         } catch (APIConnectionException e) {
             LOG.error("Connection error. Should retry later. ", e);
@@ -357,7 +388,7 @@ public class SMSClientTest extends BaseTest {
                 .setRecipients(list.toArray(recipientPayloads))
                 .build();
         try {
-            ScheduleListResult result = client.updateBatchScheduleSMS(smsPayload, "d2afae04-6211-4c51-b51a-bbfbf5576f03");
+            BatchSMSResult result = client.updateBatchScheduleSMS(smsPayload, "d2afae04-6211-4c51-b51a-bbfbf5576f03");
             LOG.info(result.toString());
         } catch (APIConnectionException e) {
             LOG.error("Connection error. Should retry later. ", e);

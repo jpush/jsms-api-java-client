@@ -8,8 +8,9 @@ import cn.jsms.api.account.AccountBalanceResult;
 import cn.jsms.api.account.AppBalanceResult;
 import cn.jsms.api.common.JSMSConfig;
 import cn.jsms.api.common.SMSClient;
+import cn.jsms.api.common.model.BatchSMSPayload;
 import cn.jsms.api.common.model.SMSPayload;
-import cn.jsms.api.schedule.model.ScheduleListResult;
+import cn.jsms.api.common.model.BatchSMSResult;
 import cn.jsms.api.schedule.model.ScheduleResult;
 import cn.jsms.api.schedule.model.ScheduleSMSPayload;
 import cn.jsms.api.schedule.model.ScheduleSMSResult;
@@ -81,6 +82,18 @@ public class JSMSClient {
 		return _smsClient.sendTemplateSMS(payload);
 	}
 
+    /**
+     * Send a batch of template SMS
+     * @param payload BatchSMSPayload
+     * @return BatchSMSResult
+     * @throws APIConnectionException connect exception
+     * @throws APIRequestException request exception
+     */
+    public BatchSMSResult sendBatchTemplateSMS(BatchSMSPayload payload)
+            throws APIConnectionException, APIRequestException {
+        return _smsClient.sendBatchTemplateSMS(payload);
+    }
+
 	/**
 	 * Submit a mission that sending a template SMS with pointed schedule
 	 * @param payload ScheduleSMSPayload
@@ -109,11 +122,11 @@ public class JSMSClient {
     /**
      * Submit a mission that sending a batch of SMS with schedule
      * @param payload Payload should include sendTime and recipients
-     * @return ScheduleListResult
+     * @return BatchSMSResult
      * @throws APIConnectionException connect exception
      * @throws APIRequestException request exception
      */
-    public ScheduleListResult sendBatchScheduleSMS(ScheduleSMSPayload payload)
+    public BatchSMSResult sendBatchScheduleSMS(ScheduleSMSPayload payload)
             throws APIConnectionException, APIRequestException {
         return _smsClient.sendBatchScheduleSMS(payload);
     }
@@ -122,11 +135,11 @@ public class JSMSClient {
      * Update batch of SMS with schedule
      * @param payload ScheduleSMSPayload
      * @param scheduleId id
-     * @return ScheduleListResult
+     * @return BatchSMSResult
      * @throws APIConnectionException connection exception
      * @throws APIRequestException request exception
      */
-    public ScheduleListResult updateBatchScheduleSMS(ScheduleSMSPayload payload, String scheduleId)
+    public BatchSMSResult updateBatchScheduleSMS(ScheduleSMSPayload payload, String scheduleId)
             throws APIConnectionException, APIRequestException {
         return _smsClient.updateBatchScheduleSMS(payload, scheduleId);
     }

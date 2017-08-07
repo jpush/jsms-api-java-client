@@ -1,8 +1,7 @@
-package cn.jsms.api.schedule.model;
+package cn.jsms.api.common.model;
 
 import cn.jiguang.common.utils.Preconditions;
 import cn.jiguang.common.utils.StringUtils;
-import cn.jsms.api.common.model.IModel;
 import com.google.gson.*;
 
 import java.util.HashMap;
