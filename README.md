@@ -1,7 +1,7 @@
 # jsms-api-java-client
 
 ### 概述
-这是短信 Rest API 的 Java 版本封装开发包，是有极光推送官方提供的，一般支持最新的 API功能。
+这是短信 Rest API 的 Java 版本封装开发包，是由极光推送官方提供的，一般支持最新的 API功能。
 
 对应的 Rest API 文档：http://docs.jiguang.cn/server/rest_api_jsms/
 
@@ -15,7 +15,7 @@
 <dependency>
     <groupId>cn.jpush.api</groupId>
     <artifactId>jsms-client</artifactId>
-    <version>1.2.4</version>
+    <version>1.2.5</version>
 </dependency>
 <dependency>
 	<groupId>com.google.code.gson</groupId>
@@ -49,6 +49,6 @@
 * [slf4j](http://www.slf4j.org/) / log4j (Logger)
 * [gson](https://code.google.com/p/google-gson/) (Google JSON Utils)
 * [jiguang-common-client](https://github.com/jpush/jiguang-java-client-common)
-* [jsms-client](https://github.com/jpush/jsms-api-java-client/releases/download/jsms-client-1.2.2/jsms-client-1.2.2.zip)
+* [jsms-client](https://github.com/jpush/jsms-api-java-client/releases/download/jsms-client-1.2.5/jsms-client-1.2.5.zip)
 
 [项目 libs/ 目录](https://github.com/jpush/jsms-api-java-client/tree/master/libs)下可以找到 slf4j 及 gson jar 包 可复制到你的项目里去。

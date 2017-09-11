@@ -171,11 +171,13 @@ public class SMSClientTest extends BaseTest {
         SMSPayload payload = SMSPayload.newBuilder()
                 .setMobileNumber("13800138000")
                 .setVoiceLang(2)
+                .setCode("039482")
                 .build();
 
         JsonObject json = new JsonObject();
         json.addProperty("mobile", "13800138000");
         json.addProperty("voice_lang", 2);
+        json.addProperty("code", "039482");
         assertEquals(payload.toJSON(), json);
 
         try {

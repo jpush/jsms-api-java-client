@@ -15,21 +15,24 @@ public class SMSPayload implements IModel {
 	private static String TEMP_ID = "temp_id";
     private static String TTL = "ttl";
 	private static String TEMP_PARA = "temp_para";
+    private static String CODE = "code";
 	private static String VOICE_LANG = "voice_lang";
 
 	private String mobile;
 	private int temp_id;
     // Time to live parameter, the unit is second.
     private int ttl;
+    private String code;
     private int voice_lang = -1;
 	private final Map<String, String> temp_para;
 
 	private static Gson gson = new Gson();
 
-	private SMSPayload(String mobileNumber, int tempId, int ttl, int voiceLang, Map<String, String> temp_para) {
+	private SMSPayload(String mobileNumber, int tempId, int ttl, String code, int voiceLang, Map<String, String> temp_para) {
 		this.mobile = mobileNumber;
 		this.temp_id = tempId;
         this.ttl = ttl;
+        this.code = code;
         this.voice_lang = voiceLang;
 		this.temp_para = temp_para;
 	}
@@ -42,6 +45,7 @@ public class SMSPayload implements IModel {
 		private String mobile;
 		private int temp_id;
         private int ttl;
+        private String code;
         private int voice_lang = -1;
 		private Map<String, String> tempParaBuilder;
 
@@ -57,6 +61,12 @@ public class SMSPayload implements IModel {
 
 		public Builder setTTL(int ttl) {
 		    this.ttl = ttl;
+            return this;
+        }
+
+        public Builder setCode(String code) {
+            Preconditions.checkArgument(code.length() >= 4 && code.length() <= 8, "Code's length should between 4 and 8");
+            this.code = code;
             return this;
         }
 
@@ -92,7 +102,7 @@ public class SMSPayload implements IModel {
             Preconditions.checkArgument(ttl >= 0, "ttl should not less 0");
             Preconditions.checkArgument(temp_id >= 0, "temp id should not less 0");
 
-			return new SMSPayload(mobile, temp_id, ttl, voice_lang, tempParaBuilder);
+			return new SMSPayload(mobile, temp_id, ttl, code, voice_lang, tempParaBuilder);
 		}
 	}
 	
@@ -113,6 +123,10 @@ public class SMSPayload implements IModel {
 
         if (voice_lang != -1) {
             json.addProperty(VOICE_LANG, voice_lang);
+        }
+
+        if (code != null) {
+            json.addProperty(CODE, code);
         }
 
 		JsonObject tempJson = null;
