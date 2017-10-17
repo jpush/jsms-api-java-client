@@ -14,6 +14,9 @@ import cn.jsms.api.common.model.BatchSMSResult;
 import cn.jsms.api.schedule.model.ScheduleResult;
 import cn.jsms.api.schedule.model.ScheduleSMSPayload;
 import cn.jsms.api.schedule.model.ScheduleSMSResult;
+import cn.jsms.api.template.SendTempSMSResult;
+import cn.jsms.api.template.TempSMSResult;
+import cn.jsms.api.template.TemplatePayload;
 
 public class JSMSClient {
 	
@@ -184,5 +187,51 @@ public class JSMSClient {
      */
     public AppBalanceResult getAppSMSBalance() throws APIConnectionException, APIRequestException {
         return _smsClient.getAppSMSBalance();
+    }
+
+    //============     Template API     ==============
+
+    /**
+     * Create template sms.
+     * @param payload {@link TemplatePayload }
+     * @return {@link SendTempSMSResult }, include temp_id
+     * @throws APIConnectionException connect exception
+     * @throws APIRequestException request exception
+     */
+    public SendTempSMSResult createTemplate(TemplatePayload payload) throws APIConnectionException, APIRequestException {
+        return _smsClient.createTemplate(payload);
+    }
+
+    /**
+     * update template sms. Template can be modified ONLY when status is not approved
+     * @param payload {@link TemplatePayload }
+     * @return {@link SendTempSMSResult }, include temp_id
+     * @throws APIConnectionException connect exception
+     * @throws APIRequestException request exception
+     */
+    public SendTempSMSResult updateTemplate(TemplatePayload payload) throws APIConnectionException, APIRequestException {
+        return _smsClient.updateTemplate(payload);
+    }
+
+    /**
+     * check template by id
+     * @param tempId necessary
+     * @return {@link TempSMSResult}
+     * @throws APIConnectionException connect exception
+     * @throws APIRequestException request exception
+     */
+    public TempSMSResult checkTemplate(int tempId) throws APIConnectionException, APIRequestException {
+        return _smsClient.checkTemplate(tempId);
+    }
+
+    /**
+     * Delete template by id
+     * @param tempId necessary
+     * @return No content
+     * @throws APIConnectionException connect exception
+     * @throws APIRequestException request exception
+     */
+    public ResponseWrapper deleteTemplate(int tempId) throws APIConnectionException, APIRequestException {
+        return _smsClient.deleteTemplate(tempId);
     }
 }

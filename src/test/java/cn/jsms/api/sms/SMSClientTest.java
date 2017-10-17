@@ -11,6 +11,9 @@ import cn.jsms.api.common.model.BatchSMSResult;
 import cn.jsms.api.common.model.RecipientPayload;
 import cn.jsms.api.schedule.model.ScheduleResult;
 import cn.jsms.api.schedule.model.ScheduleSMSPayload;
+import cn.jsms.api.template.SendTempSMSResult;
+import cn.jsms.api.template.TempSMSResult;
+import cn.jsms.api.template.TemplatePayload;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -437,6 +440,78 @@ public class SMSClientTest extends BaseTest {
         try {
             client = new SMSClient(MASTER_SECRET, APP_KEY);
             AppBalanceResult result = client.getAppSMSBalance();
+            LOG.info(result.toString());
+        } catch (APIConnectionException e) {
+            LOG.error("Connection error. Should retry later. ", e);
+        } catch (APIRequestException e) {
+            LOG.error("Error response from JPush server. Should review and fix it. ", e);
+            LOG.info("HTTP Status: " + e.getStatus());
+            LOG.info("Error Message: " + e.getMessage());
+        }
+    }
+
+    @Test
+    public void testCreateTemplate() {
+        try {
+            client = new SMSClient(MASTER_SECRET, APP_KEY);
+            TemplatePayload payload = TemplatePayload.newBuilder()
+                    .setTemplate("您好，您的验证码是{{code}}，2分钟内有效！")
+                    .setType(1)
+                    .setTTL(120)
+                    .setRemark("验证短信")
+                    .build();
+            SendTempSMSResult result = client.createTemplate(payload);
+            LOG.info(result.toString());
+        } catch (APIConnectionException e) {
+            LOG.error("Connection error. Should retry later. ", e);
+        } catch (APIRequestException e) {
+            LOG.error("Error response from JPush server. Should review and fix it. ", e);
+            LOG.info("HTTP Status: " + e.getStatus());
+            LOG.info("Error Message: " + e.getMessage());
+        }
+    }
+
+    @Test
+    public void testUpdateTemplate() {
+        try {
+            client = new SMSClient(MASTER_SECRET, APP_KEY);
+            TemplatePayload payload = TemplatePayload.newBuilder()
+                    .setTemplate("您好，您的验证码是{{code}}，2分钟内有效！")
+                    .setType(1)
+                    .setTTL(120)
+                    .setRemark("验证短信")
+                    .build();
+            SendTempSMSResult result = client.updateTemplate(payload);
+            LOG.info(result.toString());
+        } catch (APIConnectionException e) {
+            LOG.error("Connection error. Should retry later. ", e);
+        } catch (APIRequestException e) {
+            LOG.error("Error response from JPush server. Should review and fix it. ", e);
+            LOG.info("HTTP Status: " + e.getStatus());
+            LOG.info("Error Message: " + e.getMessage());
+        }
+    }
+
+    @Test
+    public void testCheckTemplate() {
+        try {
+            client = new SMSClient(MASTER_SECRET, APP_KEY);
+            TempSMSResult result = client.checkTemplate(144923);
+            LOG.info(result.toString());
+        } catch (APIConnectionException e) {
+            LOG.error("Connection error. Should retry later. ", e);
+        } catch (APIRequestException e) {
+            LOG.error("Error response from JPush server. Should review and fix it. ", e);
+            LOG.info("HTTP Status: " + e.getStatus());
+            LOG.info("Error Message: " + e.getMessage());
+        }
+    }
+
+    @Test
+    public void testDeleteTemplate() {
+        try {
+            client = new SMSClient(MASTER_SECRET, APP_KEY);
+            ResponseWrapper result = client.deleteTemplate(144923);
             LOG.info(result.toString());
         } catch (APIConnectionException e) {
             LOG.error("Connection error. Should retry later. ", e);

@@ -12,6 +12,9 @@ import cn.jsms.api.common.model.BatchSMSResult;
 import cn.jsms.api.schedule.model.ScheduleResult;
 import cn.jsms.api.schedule.model.ScheduleSMSPayload;
 import cn.jsms.api.schedule.model.ScheduleSMSResult;
+import cn.jsms.api.template.SendTempSMSResult;
+import cn.jsms.api.template.TempSMSResult;
+import cn.jsms.api.template.TemplatePayload;
 import com.google.gson.JsonObject;
 
 import cn.jiguang.common.ServiceHelper;
@@ -33,9 +36,10 @@ public class SMSClient {
 	private String _smsCodePath;
 	private String _validPath;
 	private String _voiceCodePath;
-	private String _tempMsgPath;
+	private String _shortMsgPath;
 	private String _schedulePath;
     private String _accountPath;
+    private String _tempMsgPath;
 	private IHttpClient _httpClient;
 
 	public SMSClient(String masterSecret, String appkey) {
@@ -49,7 +53,8 @@ public class SMSClient {
 		_smsCodePath = (String) conf.get(JSMSConfig.CODE_PATH);
 		_validPath = (String) conf.get(JSMSConfig.VALID_PATH);
 		_voiceCodePath = (String) conf.get(JSMSConfig.VOICE_CODE_PATH);
-		_tempMsgPath = (String) conf.get(JSMSConfig.TEMP_MESSAGE_PATH);
+		_shortMsgPath = (String) conf.get(JSMSConfig.SHORT_MESSAGE_PATH);
+        _tempMsgPath = (String) conf.get(JSMSConfig.TEMPlATE_MESSAGE_PATH);
 		_schedulePath = (String) conf.get(JSMSConfig.SCHEDULE_PATH);
         _accountPath = (String) conf.get(JSMSConfig.ACCOUNT_PATH);
 		String authCode = ServiceHelper.getBasicAuthorization(appkey, masterSecret);
@@ -119,7 +124,7 @@ public class SMSClient {
 			throws APIConnectionException, APIRequestException {
 		Preconditions.checkArgument(null != payload, "SMS payload should not be null");
 
-		ResponseWrapper response = _httpClient.sendPost(_baseUrl + _tempMsgPath, payload.toString());
+		ResponseWrapper response = _httpClient.sendPost(_baseUrl + _shortMsgPath, payload.toString());
 		return SendSMSResult.fromResponse(response, SendSMSResult.class);
 	}
 
@@ -133,7 +138,7 @@ public class SMSClient {
 	public BatchSMSResult sendBatchTemplateSMS(BatchSMSPayload payload)
             throws APIConnectionException, APIRequestException {
         Preconditions.checkArgument(null != payload, "BatchSMSPayload should not be null");
-        ResponseWrapper responseWrapper = _httpClient.sendPost(_baseUrl + _tempMsgPath + "/batch", payload.toString());
+        ResponseWrapper responseWrapper = _httpClient.sendPost(_baseUrl + _shortMsgPath + "/batch", payload.toString());
         return BatchSMSResult.fromResponse(responseWrapper, BatchSMSResult.class);
     }
 
@@ -259,5 +264,60 @@ public class SMSClient {
         ResponseWrapper responseWrapper = _httpClient.sendGet(_baseUrl + _accountPath + "/app");
         return AppBalanceResult.fromResponse(responseWrapper, AppBalanceResult.class);
     }
+
+    //===============      Template API     =================
+
+    /**
+     * Create template sms.
+     * @param payload {@link TemplatePayload }
+     * @return {@link SendTempSMSResult }, include temp_id
+     * @throws APIConnectionException connect exception
+     * @throws APIRequestException request exception
+     */
+	public SendTempSMSResult createTemplate(TemplatePayload payload) throws APIConnectionException, APIRequestException {
+        Preconditions.checkArgument(null != payload, "Template payload should not be null");
+		ResponseWrapper responseWrapper = _httpClient.sendPost(_baseUrl + _tempMsgPath, payload.toString());
+        return SendTempSMSResult.fromResponse(responseWrapper, SendTempSMSResult.class);
+	}
+
+    /**
+     * update template sms. Template can be modified ONLY when status is not approved
+     * @param payload {@link TemplatePayload }
+     * @return {@link SendTempSMSResult }, include temp_id
+     * @throws APIConnectionException connect exception
+     * @throws APIRequestException request exception
+     */
+	public SendTempSMSResult updateTemplate(TemplatePayload payload) throws APIConnectionException, APIRequestException {
+        Preconditions.checkArgument(null != payload, "Template payload should not be null");
+        ResponseWrapper responseWrapper = _httpClient.sendPut(_baseUrl + _tempMsgPath, payload.toString());
+        return SendTempSMSResult.fromResponse(responseWrapper, SendTempSMSResult.class);
+    }
+
+    /**
+     * check template by id
+     * @param tempId necessary
+     * @return {@link TempSMSResult}
+     * @throws APIConnectionException connect exception
+     * @throws APIRequestException request exception
+     */
+    public TempSMSResult checkTemplate(int tempId) throws APIConnectionException, APIRequestException {
+        Preconditions.checkArgument(tempId > 0, "temp id is invalid");
+        ResponseWrapper responseWrapper = _httpClient.sendGet(_baseUrl + _tempMsgPath + "/" + tempId);
+        return TempSMSResult.fromResponse(responseWrapper, TempSMSResult.class);
+    }
+
+    /**
+     * Delete template by id
+     * @param tempId necessary
+     * @return No content
+     * @throws APIConnectionException connect exception
+     * @throws APIRequestException request exception
+     */
+    public ResponseWrapper deleteTemplate(int tempId) throws APIConnectionException, APIRequestException {
+        Preconditions.checkArgument(tempId > 0, "temp id is invalid");
+        return _httpClient.sendDelete(_baseUrl + _tempMsgPath + "/" + tempId);
+    }
+
+
 
 }
