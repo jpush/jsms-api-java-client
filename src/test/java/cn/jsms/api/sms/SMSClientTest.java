@@ -476,6 +476,7 @@ public class SMSClientTest extends BaseTest {
         try {
             client = new SMSClient(MASTER_SECRET, APP_KEY);
             TemplatePayload payload = TemplatePayload.newBuilder()
+                    .setTempId(12345)
                     .setTemplate("您好，您的验证码是{{code}}，2分钟内有效！")
                     .setType(1)
                     .setTTL(120)
