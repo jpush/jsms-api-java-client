@@ -351,6 +351,7 @@ public class JSMSExample {
         try {
             SMSClient client = new SMSClient(masterSecret, appkey);
             TemplatePayload payload = TemplatePayload.newBuilder()
+                    .setTempId(12345)
                     .setTemplate("您好，您的验证码是{{code}}，2分钟内有效！")
                     .setType(1)
                     .setTTL(120)
