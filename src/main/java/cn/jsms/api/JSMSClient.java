@@ -205,12 +205,13 @@ public class JSMSClient {
     /**
      * update template sms. Template can be modified ONLY when status is not approved
      * @param payload {@link TemplatePayload }
+     * @param tempId temp id
      * @return {@link SendTempSMSResult }, include temp_id
      * @throws APIConnectionException connect exception
      * @throws APIRequestException request exception
      */
-    public SendTempSMSResult updateTemplate(TemplatePayload payload) throws APIConnectionException, APIRequestException {
-        return _smsClient.updateTemplate(payload);
+    public SendTempSMSResult updateTemplate(TemplatePayload payload, int tempId) throws APIConnectionException, APIRequestException {
+        return _smsClient.updateTemplate(payload, tempId);
     }
 
     /**

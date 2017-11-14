@@ -283,13 +283,15 @@ public class SMSClient {
     /**
      * update template sms. Template can be modified ONLY when status is not approved
      * @param payload {@link TemplatePayload }
+     * @param tempId template id
      * @return {@link SendTempSMSResult }, include temp_id
      * @throws APIConnectionException connect exception
      * @throws APIRequestException request exception
      */
-	public SendTempSMSResult updateTemplate(TemplatePayload payload) throws APIConnectionException, APIRequestException {
+	public SendTempSMSResult updateTemplate(TemplatePayload payload, int tempId) throws APIConnectionException, APIRequestException {
         Preconditions.checkArgument(null != payload, "Template payload should not be null");
-        ResponseWrapper responseWrapper = _httpClient.sendPut(_baseUrl + _tempMsgPath, payload.toString());
+		Preconditions.checkArgument(tempId > 0, "temp id is invalid");
+        ResponseWrapper responseWrapper = _httpClient.sendPut(_baseUrl + _tempMsgPath + "/" + tempId, payload.toString());
         return SendTempSMSResult.fromResponse(responseWrapper, SendTempSMSResult.class);
     }
 
