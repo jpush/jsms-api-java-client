@@ -357,7 +357,7 @@ public class JSMSExample {
                     .setTTL(120)
                     .setRemark("验证短信")
                     .build();
-            SendTempSMSResult result = client.updateTemplate(payload);
+            SendTempSMSResult result = client.updateTemplate(payload, 12345);
             LOG.info(result.toString());
         } catch (APIConnectionException e) {
             LOG.error("Connection error. Should retry later. ", e);
