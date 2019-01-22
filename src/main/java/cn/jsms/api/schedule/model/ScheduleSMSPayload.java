@@ -14,20 +14,26 @@ public class ScheduleSMSPayload implements IModel {
     private static String SEND_TIME = "send_time";
     private static String RECIPIENTS = "recipients";
     private static String MOBILE = "mobile";
+    private static String SIGN_ID = "sign_id";
     private static String TEMP_ID = "temp_id";
+    private static String TAG = "tag";
     private static String TEMP_PARA = "temp_para";
 
     private String sendTime;
     private String mobile;
+    private int sign_id;
     private int temp_id;
+    private String tag;
     private final Map<String, String> temp_para;
 
     private static Gson gson = new Gson();
     private JsonArray recipients;
 
-    private ScheduleSMSPayload(String mobileNumber, int tempId, Map<String, String> temp_para, String sendTime, JsonArray recipients) {
-        this.mobile = mobileNumber;
+    private ScheduleSMSPayload(String mobile, int signId, String tag, int tempId, Map<String, String> temp_para, String sendTime, JsonArray recipients) {
+        this.mobile = mobile;
+        this.sign_id = signId;
         this.temp_id = tempId;
+        this.tag = tag;
         this.temp_para = temp_para;
         this.sendTime = sendTime;
         this.recipients = recipients;
@@ -39,18 +45,30 @@ public class ScheduleSMSPayload implements IModel {
 
     public static class Builder {
         private String mobile;
+        private int sign_id;
         private int temp_id;
+        private String tag;
         private Map<String, String> tempParaBuilder;
         private String sendTime;
         private JsonArray recipients = new JsonArray();
 
-        public Builder setMobileNumber(String mobileNumber) {
-            this.mobile = mobileNumber.trim();
+        public Builder setMobileNumber(String mobile) {
+            this.mobile = mobile.trim();
+            return this;
+        }
+
+        public Builder setSignId(int signId) {
+            this.sign_id = signId;
             return this;
         }
 
         public Builder setTempId(int tempId) {
             this.temp_id = tempId;
+            return this;
+        }
+
+        public Builder setTag(String tag) {
+            this.tag = tag;
             return this;
         }
 
@@ -100,7 +118,7 @@ public class ScheduleSMSPayload implements IModel {
             Preconditions.checkArgument(temp_id >= 0, "temp id should not less 0");
             Preconditions.checkArgument(null != sendTime, "send time should not be null");
             Preconditions.checkArgument(TimeUtils.isDateFormat(sendTime), "send time format is invalid");
-            return new ScheduleSMSPayload(mobile, temp_id, tempParaBuilder, sendTime, recipients);
+            return new ScheduleSMSPayload(mobile, sign_id, tag, temp_id, tempParaBuilder, sendTime, recipients);
         }
     }
 
@@ -116,8 +134,16 @@ public class ScheduleSMSPayload implements IModel {
             json.addProperty(MOBILE, mobile);
         }
 
+        if (sign_id > 0) {
+            json.addProperty(SIGN_ID, sign_id);
+        }
+
         if (temp_id > 0) {
             json.addProperty(TEMP_ID, temp_id);
+        }
+
+        if (null != tag) {
+            json.addProperty(TAG, tag);
         }
 
         JsonObject tempJson = null;
