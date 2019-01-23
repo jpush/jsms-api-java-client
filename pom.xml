@@ -22,7 +22,7 @@
 		<artifactId>oss-parent</artifactId>
 		<version>9</version>
 	</parent>
-	
+
 	<scm>
 		<url>https://github.com/jpush/jsms-api-java-client</url>
 		<connection>scm:git:git@github.com:jpush/jsms-api-java-client.git</connection>
@@ -179,6 +179,17 @@
 
 		</plugins>
 	</build>
+
+    <distributionManagement>
+		<snapshotRepository>
+			<id>ossrh</id>
+			<url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+		</snapshotRepository>
+		<repository>
+			<id>ossrh</id>
+			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+		</repository>
+    </distributionManagement>
 
 	<reporting>
 		<plugins>

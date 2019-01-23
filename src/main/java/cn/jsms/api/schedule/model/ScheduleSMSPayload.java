@@ -29,11 +29,11 @@ public class ScheduleSMSPayload implements IModel {
     private static Gson gson = new Gson();
     private JsonArray recipients;
 
-    private ScheduleSMSPayload(String mobile, int signId, String tag, int tempId, Map<String, String> temp_para, String sendTime, JsonArray recipients) {
-        this.mobile = mobile;
+    private ScheduleSMSPayload(String mobileNumber, int signId, String tag, int tempId, Map<String, String> temp_para, String sendTime, JsonArray recipients) {
+        this.mobile = mobileNumber;
         this.sign_id = signId;
-        this.temp_id = tempId;
         this.tag = tag;
+        this.temp_id = tempId;
         this.temp_para = temp_para;
         this.sendTime = sendTime;
         this.recipients = recipients;
@@ -52,8 +52,8 @@ public class ScheduleSMSPayload implements IModel {
         private String sendTime;
         private JsonArray recipients = new JsonArray();
 
-        public Builder setMobileNumber(String mobile) {
-            this.mobile = mobile.trim();
+        public Builder setMobileNumber(String mobileNumber) {
+            this.mobile = mobileNumber.trim();
             return this;
         }
 
