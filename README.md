@@ -11,11 +11,13 @@
 将下边的依赖条件放到你项目的 maven pom.xml 文件里。
 > 其中 slf4j 可以与 logback, log4j, commons-logging 等日志框架一起工作，可根据你的需要配置使用。
 
+其中 LATEST_VERSION 的值可在 [release 页面](https://github.com/jpush/jsms-api-java-client/releases/latest) 获取
+
 ```Java
 <dependency>
     <groupId>cn.jpush.api</groupId>
     <artifactId>jsms-client</artifactId>
-    <version>1.2.8</version>
+    <version>LATEST_VERSION</version>
 </dependency>
 <dependency>
 	<groupId>com.google.code.gson</groupId>
@@ -49,6 +51,6 @@
 * [slf4j](http://www.slf4j.org/) / log4j (Logger)
 * [gson](https://code.google.com/p/google-gson/) (Google JSON Utils)
 * [jiguang-common-client](https://github.com/jpush/jiguang-java-client-common)
-* [jsms-client](https://github.com/jpush/jsms-api-java-client/releases/download/jsms-client-1.2.8/jsms-api-java-client-1.2.8.zip)
+* [jsms-client](https://github.com/jpush/jsms-api-java-client/releases/latest)
 
 [项目 libs/ 目录](https://github.com/jpush/jsms-api-java-client/tree/master/libs)下可以找到 slf4j 及 gson jar 包 可复制到你的项目里去。
