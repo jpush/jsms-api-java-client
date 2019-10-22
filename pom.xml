@@ -3,7 +3,7 @@
 
 	<groupId>cn.jpush.api</groupId>
 	<artifactId>jsms-client</artifactId>
-	<version>1.2.9</version>
+	<version>1.2.10</version>
 	<packaging>jar</packaging>
 
 	<name>jsms-client</name>
