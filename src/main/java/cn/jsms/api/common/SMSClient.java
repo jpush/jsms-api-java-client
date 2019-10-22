@@ -18,6 +18,8 @@ import cn.jsms.api.common.model.BatchSMSResult;
 import cn.jsms.api.schedule.model.ScheduleResult;
 import cn.jsms.api.schedule.model.ScheduleSMSPayload;
 import cn.jsms.api.schedule.model.ScheduleSMSResult;
+import cn.jsms.api.sign.DefaultSignPayload;
+import cn.jsms.api.sign.SignInfoResult;
 import cn.jsms.api.sign.SignPayload;
 import cn.jsms.api.sign.SignResult;
 import cn.jsms.api.template.SendTempSMSResult;
@@ -381,7 +383,7 @@ public class SMSClient {
         }
     }
 
-    public SignResult updateSign(SignPayload payload, int signId)  throws APIConnectionException, APIRequestException{
+    public SignResult updateSign(SignPayload payload, int signId) throws APIConnectionException, APIRequestException {
         Preconditions.checkArgument(null != payload, "sign payload should not be null");
         Preconditions.checkArgument(payload.getType() > 0 && payload.getType() < 7,
                 "type should be between 1 and 7");
@@ -404,12 +406,22 @@ public class SMSClient {
         }
     }
 
-    public ResponseWrapper deleteSign(int signId) throws APIConnectionException, APIRequestException{
-        Preconditions.checkArgument(signId > 0, "temp id is invalid");
+    public ResponseWrapper deleteSign(int signId) throws APIConnectionException, APIRequestException {
+        Preconditions.checkArgument(signId > 0, "sign id is invalid");
         return _httpClient.sendDelete(_baseUrl + _signPath + "/" + signId);
     }
 
+    public SignInfoResult checkSign(int signId) throws APIConnectionException, APIRequestException {
+        Preconditions.checkArgument(signId > 0, "sign id is invalid");
+        ResponseWrapper responseWrapper = _httpClient.sendGet(_baseUrl + _tempMsgPath + "/" + signId);
+        return SignInfoResult.fromResponse(responseWrapper, SignInfoResult.class);
+    }
 
+    public ResponseWrapper setDefaultSign(DefaultSignPayload payload) throws APIConnectionException, APIRequestException {
+        Preconditions.checkArgument(payload != null, "sign should not be null");
+        ResponseWrapper responseWrapper = _httpClient.sendPost(_baseUrl + _signDefaultPath, payload.toString());
+        return responseWrapper;
+    }
 
     public SignResult doPostSign(String strUrl, Map<String, Object> params, Map<String, byte[]> fileParams,
                                  String imageName) throws Exception {
@@ -420,6 +432,9 @@ public class SMSClient {
         connection.setUseCaches(false);
         connection.setInstanceFollowRedirects(true);
         connection.setRequestMethod("POST");
+        connection.setRequestProperty("connection", "Keep-Alive");
+        connection.setRequestProperty("Charset", "UTF-8");
+        connection.setRequestProperty("Authorization", _authCode);
         connection.setRequestProperty("Accept", "application/json, text/plain, */*"); // 设置接收数据的格式
         connection.setRequestProperty("Content-Type", "multipart/form-data; boundary=" + BOUNDARY); // 设置发送数据的格式
         connection.connect();
