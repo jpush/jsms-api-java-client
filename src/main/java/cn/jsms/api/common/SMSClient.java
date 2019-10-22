@@ -362,7 +362,7 @@ public class SMSClient {
         Preconditions.checkArgument(null != payload, "sign payload should not be null");
         Preconditions.checkArgument(payload.getType() > 0 && payload.getType() < 7,
                 "type should be between 1 and 7");
-        Preconditions.checkArgument(StringUtils.isEmpty(payload.getSign()),
+        Preconditions.checkArgument(!StringUtils.isEmpty(payload.getSign()),
                 "sign should not be null");
         Map<String, Object> params = new HashMap<String, Object>();
         params.put(SignPayload.getSIGN(), payload.getSign());
@@ -370,20 +370,43 @@ public class SMSClient {
         params.put(SignPayload.getTYPE(), payload.getType());
         Map<String, byte[]> fileParams = new HashMap<String, byte[]>();
         for (File file : payload.getImages()) {
-            fileParams.put(file.getName(),getBytes(file));
+            fileParams.put(file.getName(), getBytes(file));
         }
         String url = _baseUrl + _signPath;
         try {
-           return doPostSign(url,params,fileParams,SignPayload.getIMAGES());
-        }catch (Exception e){
+            return doPostSign(url, params, fileParams, SignPayload.getIMAGES());
+        } catch (Exception e) {
             e.printStackTrace();
             throw new IllegalArgumentException("fail to creat sign");
         }
     }
 
+    public SignResult updateSign(SignPayload payload, int signId) {
+        Preconditions.checkArgument(null != payload, "sign payload should not be null");
+        Preconditions.checkArgument(payload.getType() > 0 && payload.getType() < 7,
+                "type should be between 1 and 7");
+        Preconditions.checkArgument(!StringUtils.isEmpty(payload.getSign()),
+                "sign should not be null");
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put(SignPayload.getSIGN(), payload.getSign());
+        params.put(SignPayload.getREMARK(), payload.getRemark());
+        params.put(SignPayload.getTYPE(), payload.getType());
+        Map<String, byte[]> fileParams = new HashMap<String, byte[]>();
+        for (File file : payload.getImages()) {
+            fileParams.put(file.getName(), getBytes(file));
+        }
+        String url = _baseUrl + _signPath + "/" + signId;
+        try {
+            return doPostSign(url, params, fileParams, SignPayload.getIMAGES());
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new IllegalArgumentException("fail to update sign");
+        }
+    }
+
 
     public SignResult doPostSign(String strUrl, Map<String, Object> params, Map<String, byte[]> fileParams,
-                         String imageName) throws Exception {
+                                 String imageName) throws Exception {
         URL url = new URL(strUrl);
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setDoOutput(true);
@@ -435,12 +458,12 @@ public class SMSClient {
             e.printStackTrace();
             throw new IllegalArgumentException("fail to get inputStream");
         }
-        if(null != in) {
+        if (null != in) {
             InputStreamReader responseContent = new InputStreamReader(in, "UTF-8");
             char[] quota = new char[1024];
 
             int remaining;
-            while((remaining = responseContent.read(quota)) > 0) {
+            while ((remaining = responseContent.read(quota)) > 0) {
                 stringBuffer.append(quota, 0, remaining);
             }
         }
@@ -453,11 +476,11 @@ public class SMSClient {
         String reset = connection.getHeaderField("X-Rate-Limit-Reset");
         wrapper.setRateLimit(quota1, remaining1, reset);
 
-        if(code >= 200 && code < 300) {
+        if (code >= 200 && code < 300) {
             LOG.debug("Succeed to get response OK - responseCode:" + code);
             LOG.debug("Response Content - " + responseContentStr);
         } else {
-            if(code < 300 || code >= 400) {
+            if (code < 300 || code >= 400) {
                 LOG.warn("Got error response - responseCode:" + code + ", responseContent:" + responseContentStr);
                 wrapper.setErrorObject();
                 throw new APIRequestException(wrapper);
