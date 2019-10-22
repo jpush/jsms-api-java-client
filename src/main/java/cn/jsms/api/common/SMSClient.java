@@ -38,9 +38,11 @@ public class SMSClient {
 	private String _voiceCodePath;
 	private String _shortMsgPath;
 	private String _schedulePath;
+	private String _signPath;
     private String _accountPath;
     private String _tempMsgPath;
 	private IHttpClient _httpClient;
+	private String _authCode;
 
 	public SMSClient(String masterSecret, String appkey) {
         this(masterSecret, appkey, null, JSMSConfig.getInstance());
@@ -55,9 +57,11 @@ public class SMSClient {
 		_voiceCodePath = (String) conf.get(JSMSConfig.VOICE_CODE_PATH);
 		_shortMsgPath = (String) conf.get(JSMSConfig.SHORT_MESSAGE_PATH);
         _tempMsgPath = (String) conf.get(JSMSConfig.TEMPlATE_MESSAGE_PATH);
+        _signPath = (String) conf.get(JSMSConfig.SIGN_PATH);
 		_schedulePath = (String) conf.get(JSMSConfig.SCHEDULE_PATH);
         _accountPath = (String) conf.get(JSMSConfig.ACCOUNT_PATH);
 		String authCode = ServiceHelper.getBasicAuthorization(appkey, masterSecret);
+		_authCode = authCode;
         this._httpClient = new NativeHttpClient(authCode, proxy, conf.getClientConfig());
 	}
 

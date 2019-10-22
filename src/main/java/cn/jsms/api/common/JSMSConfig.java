@@ -20,7 +20,11 @@ public class JSMSConfig {
 
 	public final static String TEMPlATE_MESSAGE_PATH = "sms.template.path";
 
-	public final static String SCHEDULE_PATH = "sms.schedule.path";
+	public final static String SIGN_PATH = "sms.sign.path";
+    public final static String SIGN_DEFAULT_PATH = "sms.sign.default.path";
+
+
+    public final static String SCHEDULE_PATH = "sms.schedule.path";
 
     public final static String ACCOUNT_PATH = "sms.account.path";
 	
@@ -35,7 +39,9 @@ public class JSMSConfig {
 		clientConfig.put(VOICE_CODE_PATH, "/v1/voice_codes");
 		clientConfig.put(SHORT_MESSAGE_PATH, "/v1/messages");
         clientConfig.put(TEMPlATE_MESSAGE_PATH, "/v1/templates");
-        clientConfig.put(SCHEDULE_PATH, "/v1/schedule");
+		clientConfig.put(SIGN_PATH,"/v1/sign");
+		clientConfig.put(SIGN_DEFAULT_PATH,"/v1/setDefaultSign");
+		clientConfig.put(SCHEDULE_PATH, "/v1/schedule");
         clientConfig.put(ACCOUNT_PATH, "/v1/accounts");
 		clientConfig.put(MAX_RETRY_TIMES, 3);
         clientConfig.put(SEND_VERSION, 1);
