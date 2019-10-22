@@ -381,7 +381,7 @@ public class SMSClient {
         }
     }
 
-    public SignResult updateSign(SignPayload payload, int signId) {
+    public SignResult updateSign(SignPayload payload, int signId)  throws APIConnectionException, APIRequestException{
         Preconditions.checkArgument(null != payload, "sign payload should not be null");
         Preconditions.checkArgument(payload.getType() > 0 && payload.getType() < 7,
                 "type should be between 1 and 7");
@@ -403,6 +403,12 @@ public class SMSClient {
             throw new IllegalArgumentException("fail to update sign");
         }
     }
+
+    public ResponseWrapper deleteSign(int signId) throws APIConnectionException, APIRequestException{
+        Preconditions.checkArgument(signId > 0, "temp id is invalid");
+        return _httpClient.sendDelete(_baseUrl + _signPath + "/" + signId);
+    }
+
 
 
     public SignResult doPostSign(String strUrl, Map<String, Object> params, Map<String, byte[]> fileParams,
