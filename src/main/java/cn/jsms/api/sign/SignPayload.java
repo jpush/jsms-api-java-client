@@ -73,6 +73,37 @@ public class SignPayload implements IModel {
         }
     }
 
+    public String getSign() {
+        return sign;
+    }
+
+    public File[] getImages() {
+        return images;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public Integer getType() {
+        return type;
+    }
+
+    public static String getIMAGES() {
+        return IMAGES;
+    }
+
+    public static String getSIGN() {
+        return SIGN;
+    }
+
+    public static String getTYPE() {
+        return TYPE;
+    }
+
+    public static String getREMARK() {
+        return REMARK;
+    }
 
     public JsonElement toJSON() {
         JsonObject json = new JsonObject();
