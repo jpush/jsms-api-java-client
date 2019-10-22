@@ -14,6 +14,10 @@ import cn.jsms.api.common.model.BatchSMSResult;
 import cn.jsms.api.schedule.model.ScheduleResult;
 import cn.jsms.api.schedule.model.ScheduleSMSPayload;
 import cn.jsms.api.schedule.model.ScheduleSMSResult;
+import cn.jsms.api.sign.DefaultSignPayload;
+import cn.jsms.api.sign.SignInfoResult;
+import cn.jsms.api.sign.SignPayload;
+import cn.jsms.api.sign.SignResult;
 import cn.jsms.api.template.SendTempSMSResult;
 import cn.jsms.api.template.TempSMSResult;
 import cn.jsms.api.template.TemplatePayload;
@@ -234,5 +238,61 @@ public class JSMSClient {
      */
     public ResponseWrapper deleteTemplate(int tempId) throws APIConnectionException, APIRequestException {
         return _smsClient.deleteTemplate(tempId);
+    }
+
+    /**
+     * create sign
+     * @param payload
+     * @return
+     * @throws APIConnectionException
+     * @throws APIRequestException
+     */
+    public SignResult createSign(SignPayload payload) throws APIConnectionException, APIRequestException{
+        return _smsClient.createSign(payload);
+    }
+
+    /**
+     * update sign
+     * @param payload
+     * @param signId
+     * @return
+     * @throws APIConnectionException
+     * @throws APIRequestException
+     */
+    public SignResult updateSign(SignPayload payload, int signId) throws APIConnectionException, APIRequestException{
+        return _smsClient.updateSign(payload, signId);
+    }
+
+    /**
+     * delete sig by id
+     * @param signId
+     * @return
+     * @throws APIConnectionException
+     * @throws APIRequestException
+     */
+    public ResponseWrapper deleteSign(int signId) throws APIConnectionException, APIRequestException{
+        return _smsClient.deleteSign(signId);
+    }
+
+    /**
+     * get sign by id
+     * @param signId
+     * @return
+     * @throws APIConnectionException
+     * @throws APIRequestException
+     */
+    public SignInfoResult checkSign(int signId) throws APIConnectionException, APIRequestException{
+        return _smsClient.checkSign(signId);
+    }
+
+    /**
+     * set default sign
+     * @param payload
+     * @return
+     * @throws APIConnectionException
+     * @throws APIRequestException
+     */
+    public ResponseWrapper setDefaultSign(DefaultSignPayload payload) throws APIConnectionException, APIRequestException{
+        return _smsClient.setDefaultSign(payload);
     }
 }

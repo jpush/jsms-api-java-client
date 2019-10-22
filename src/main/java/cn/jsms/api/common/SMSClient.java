@@ -360,6 +360,13 @@ public class SMSClient {
         return _httpClient.sendDelete(_baseUrl + _tempMsgPath + "/" + tempId);
     }
 
+    /**
+     * create sign
+     * @param payload
+     * @return
+     * @throws APIConnectionException
+     * @throws APIRequestException
+     */
     public SignResult createSign(SignPayload payload) throws APIConnectionException, APIRequestException {
         Preconditions.checkArgument(null != payload, "sign payload should not be null");
         Preconditions.checkArgument(payload.getType() > 0 && payload.getType() < 7,
@@ -383,6 +390,14 @@ public class SMSClient {
         }
     }
 
+    /**
+     * update sign
+     * @param payload
+     * @param signId
+     * @return
+     * @throws APIConnectionException
+     * @throws APIRequestException
+     */
     public SignResult updateSign(SignPayload payload, int signId) throws APIConnectionException, APIRequestException {
         Preconditions.checkArgument(null != payload, "sign payload should not be null");
         Preconditions.checkArgument(payload.getType() > 0 && payload.getType() < 7,
@@ -406,24 +421,45 @@ public class SMSClient {
         }
     }
 
+    /**
+     * delete sig by id
+     * @param signId
+     * @return
+     * @throws APIConnectionException
+     * @throws APIRequestException
+     */
     public ResponseWrapper deleteSign(int signId) throws APIConnectionException, APIRequestException {
         Preconditions.checkArgument(signId > 0, "sign id is invalid");
         return _httpClient.sendDelete(_baseUrl + _signPath + "/" + signId);
     }
 
+    /**
+     * get sign by id
+     * @param signId
+     * @return
+     * @throws APIConnectionException
+     * @throws APIRequestException
+     */
     public SignInfoResult checkSign(int signId) throws APIConnectionException, APIRequestException {
         Preconditions.checkArgument(signId > 0, "sign id is invalid");
         ResponseWrapper responseWrapper = _httpClient.sendGet(_baseUrl + _tempMsgPath + "/" + signId);
         return SignInfoResult.fromResponse(responseWrapper, SignInfoResult.class);
     }
 
+    /**
+     * set default sign
+     * @param payload
+     * @return
+     * @throws APIConnectionException
+     * @throws APIRequestException
+     */
     public ResponseWrapper setDefaultSign(DefaultSignPayload payload) throws APIConnectionException, APIRequestException {
         Preconditions.checkArgument(payload != null, "sign should not be null");
         ResponseWrapper responseWrapper = _httpClient.sendPost(_baseUrl + _signDefaultPath, payload.toString());
         return responseWrapper;
     }
 
-    public SignResult doPostSign(String strUrl, Map<String, Object> params, Map<String, byte[]> fileParams,
+    private SignResult doPostSign(String strUrl, Map<String, Object> params, Map<String, byte[]> fileParams,
                                  String imageName) throws Exception {
         URL url = new URL(strUrl);
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
