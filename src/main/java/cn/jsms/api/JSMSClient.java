@@ -285,14 +285,14 @@ public class JSMSClient {
         return _smsClient.checkSign(signId);
     }
 
-    /**
-     * set default sign
-     * @param payload
-     * @return
-     * @throws APIConnectionException
-     * @throws APIRequestException
-     */
-    public ResponseWrapper setDefaultSign(DefaultSignPayload payload) throws APIConnectionException, APIRequestException{
-        return _smsClient.setDefaultSign(payload);
-    }
+//    /**
+//     * set default sign
+//     * @param payload
+//     * @return
+//     * @throws APIConnectionException
+//     * @throws APIRequestException
+//     */
+//    public ResponseWrapper setDefaultSign(DefaultSignPayload payload) throws APIConnectionException, APIRequestException{
+//        return _smsClient.setDefaultSign(payload);
+//    }
 }
