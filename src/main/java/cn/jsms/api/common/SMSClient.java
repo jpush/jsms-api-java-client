@@ -470,94 +470,15 @@ public class SMSClient {
         return responseWrapper;
     }
 
-//    private SignResult doPostSign(String strUrl, Map<String, Object> params, Map<String, byte[]> fileParams,
-//                                  String imageName) throws Exception {
-//        URL url = new URL(strUrl);
-//        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-//        connection.setRequestMethod("POST");
-//        connection.setDoOutput(true);
-//        connection.setDoInput(true);
-//        connection.setUseCaches(false);
-//        connection.setRequestProperty("connection", "Keep-Alive");
-//        connection.setRequestProperty("Charset", "UTF-8");
-//        connection.setRequestProperty("Authorization", _authCode);
-//        connection.setRequestProperty("Content-Type", "multipart/form-data; boundary=" + BOUNDARY); // 设置发送数据的格式
-//        connection.connect();
-//        DataOutputStream out = new DataOutputStream(connection.getOutputStream());
-//        Iterator it = params.entrySet().iterator();
-//        while (it.hasNext()) {
-//            Map.Entry<String, String> entry = (Map.Entry) it.next();
-//            String key = entry.getKey();
-//            String value = String.valueOf(entry.getValue());
-//            out.writeBytes("--" + BOUNDARY + NEWLINE);
-//            out.writeBytes("Content-Disposition: form-data; name=\"" + key + "\"");
-//            out.writeBytes(NEWLINE + NEWLINE);
-//            out.writeBytes(value + NEWLINE);
-//        }
-//        if (fileParams != null && fileParams.size() > 0) {
-//            Iterator fileIt = fileParams.entrySet().iterator();
-//            while (fileIt.hasNext()) {
-//                Map.Entry<String, byte[]> fileEntry = (Map.Entry<String, byte[]>) fileIt.next();
-//                out.writeBytes("--" + BOUNDARY + NEWLINE);
-//                out.writeBytes("Content-Disposition: form-data; name=\"" + imageName
-//                        + "\"; filename=\"" + fileEntry.getKey() + "\"");
-//                out.writeBytes(NEWLINE);
-//                out.writeBytes("Content-Type: image/jpeg");//此处很关键
-//                out.writeBytes(NEWLINE + NEWLINE);
-//                out.write(fileEntry.getValue());
-//                out.writeBytes(NEWLINE);
-//            }
-//        }
-//        out.writeBytes("--" + BOUNDARY + "--");
-//        out.flush();
-//        out.close();
-//        InputStream in;
-//        int code = connection.getResponseCode();
-//        StringBuffer stringBuffer = new StringBuffer();
-//        try {
-//            if (code == HttpURLConnection.HTTP_OK) {
-//                in = connection.getInputStream();
-//            } else {
-//                in = connection.getErrorStream();
-//            }
-//        } catch (SSLException e) {
-//            e.printStackTrace();
-//            throw new IllegalArgumentException("fail to get inputStream");
-//        }
-//        if (null != in) {
-//            InputStreamReader responseContent = new InputStreamReader(in, "UTF-8");
-//            char[] quota = new char[1024];
-//
-//            int remaining;
-//            while ((remaining = responseContent.read(quota)) > 0) {
-//                stringBuffer.append(quota, 0, remaining);
-//            }
-//        }
-//        ResponseWrapper wrapper = new ResponseWrapper();
-//        String responseContentStr = stringBuffer.toString();
-//        wrapper.responseCode = code;
-//        wrapper.responseContent = responseContentStr;
-//        String quota1 = connection.getHeaderField("X-Rate-Limit-Limit");
-//        String remaining1 = connection.getHeaderField("X-Rate-Limit-Remaining");
-//        String reset = connection.getHeaderField("X-Rate-Limit-Reset");
-//        wrapper.setRateLimit(quota1, remaining1, reset);
-//
-//        if (code >= HttpURLConnection.HTTP_OK && code < HttpURLConnection.HTTP_MULT_CHOICE) {
-//            LOG.debug("Succeed to get response OK - responseCode:" + code);
-//            LOG.debug("Response Content - " + responseContentStr);
-//        } else {
-//            if (code < HttpURLConnection.HTTP_MULT_CHOICE || code >= HttpURLConnection.HTTP_BAD_REQUEST) {
-//                LOG.warn("Got error response - responseCode:" + code + ", responseContent:" + responseContentStr);
-//                wrapper.setErrorObject();
-//                throw new APIRequestException(wrapper);
-//            }
-//
-//            LOG.warn("Normal response but unexpected - responseCode:" + code + ", responseContent:" + responseContentStr);
-//        }
-//        return SignResult.fromResponse(wrapper, SignResult.class);
-//    }
-
-
+    /**
+     * post sign
+     * @param strUrl
+     * @param params
+     * @param fileParams
+     * @param fileName
+     * @return
+     * @throws Exception
+     */
     public ResponseWrapper doPostSign(String strUrl, Map<String, Object> params, Map<String, byte[]> fileParams, String fileName) throws Exception {
         ResponseWrapper wrapper = new ResponseWrapper();
         String TWO_HYPHENS = "--";
