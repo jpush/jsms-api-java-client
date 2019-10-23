@@ -403,9 +403,9 @@ public class JSMSExample {
 	    try {
             SMSClient client = new SMSClient(masterSecret, appkey);
             SignPayload payload = SignPayload.newBuilder().
-                    sign("极光SDK").
+                    sign("SDK3").
                     type(1).
-                    remark("测试SDK").
+                    remark("SDK测试").
                     build();
             SignResult result = client.createSign(payload);
             LOG.info(result.toString());

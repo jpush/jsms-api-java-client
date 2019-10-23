@@ -45,9 +45,7 @@ import javax.net.ssl.SSLException;
 public class SMSClient {
 
     private static String SMS_CODE = "code";
-    private final String NEWLINE = "\r\n";
     private final String BOUNDARY = "========7d4a6d158c9";
-    private static Logger LOG = LoggerFactory.getLogger(SMSClient.class);
 
     private String _baseUrl;
     private String _smsCodePath;
@@ -362,6 +360,7 @@ public class SMSClient {
 
     /**
      * create sign
+     *
      * @param payload
      * @return
      * @throws APIConnectionException
@@ -379,14 +378,15 @@ public class SMSClient {
         params.put(SignPayload.getTYPE(), payload.getType());
         Map<String, byte[]> fileParams = new HashMap<String, byte[]>();
         File[] images = payload.getImages();
-        if (images != null && images.length > 0){
+        if (images != null && images.length > 0) {
             for (File file : payload.getImages()) {
                 fileParams.put(file.getName(), getBytes(file));
             }
         }
         String url = _baseUrl + _signPath;
         try {
-            return doPostSign(url, params, fileParams, SignPayload.getIMAGES());
+            ResponseWrapper wrapper = doPostSign(url, params, fileParams, SignPayload.getIMAGES());
+            return SignResult.fromResponse(wrapper, SignResult.class);
         } catch (Exception e) {
             e.printStackTrace();
             throw new IllegalArgumentException("fail to creat sign");
@@ -395,6 +395,7 @@ public class SMSClient {
 
     /**
      * update sign
+     *
      * @param payload
      * @param signId
      * @return
@@ -413,14 +414,15 @@ public class SMSClient {
         params.put(SignPayload.getTYPE(), payload.getType());
         Map<String, byte[]> fileParams = new HashMap<String, byte[]>();
         File[] images = payload.getImages();
-        if (images != null && images.length > 0){
+        if (images != null && images.length > 0) {
             for (File file : payload.getImages()) {
                 fileParams.put(file.getName(), getBytes(file));
             }
         }
         String url = _baseUrl + _signPath + "/" + signId;
         try {
-            return doPostSign(url, params, fileParams, SignPayload.getIMAGES());
+            ResponseWrapper wrapper = doPostSign(url, params, fileParams, SignPayload.getIMAGES());
+            return SignResult.fromResponse(wrapper, SignResult.class);
         } catch (Exception e) {
             e.printStackTrace();
             throw new IllegalArgumentException("fail to update sign");
@@ -468,95 +470,194 @@ public class SMSClient {
         return responseWrapper;
     }
 
-    private SignResult doPostSign(String strUrl, Map<String, Object> params, Map<String, byte[]> fileParams,
-                                  String imageName) throws Exception {
+//    private SignResult doPostSign(String strUrl, Map<String, Object> params, Map<String, byte[]> fileParams,
+//                                  String imageName) throws Exception {
+//        URL url = new URL(strUrl);
+//        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+//        connection.setRequestMethod("POST");
+//        connection.setDoOutput(true);
+//        connection.setDoInput(true);
+//        connection.setUseCaches(false);
+//        connection.setRequestProperty("connection", "Keep-Alive");
+//        connection.setRequestProperty("Charset", "UTF-8");
+//        connection.setRequestProperty("Authorization", _authCode);
+//        connection.setRequestProperty("Content-Type", "multipart/form-data; boundary=" + BOUNDARY); // 设置发送数据的格式
+//        connection.connect();
+//        DataOutputStream out = new DataOutputStream(connection.getOutputStream());
+//        Iterator it = params.entrySet().iterator();
+//        while (it.hasNext()) {
+//            Map.Entry<String, String> entry = (Map.Entry) it.next();
+//            String key = entry.getKey();
+//            String value = String.valueOf(entry.getValue());
+//            out.writeBytes("--" + BOUNDARY + NEWLINE);
+//            out.writeBytes("Content-Disposition: form-data; name=\"" + key + "\"");
+//            out.writeBytes(NEWLINE + NEWLINE);
+//            out.writeBytes(value + NEWLINE);
+//        }
+//        if (fileParams != null && fileParams.size() > 0) {
+//            Iterator fileIt = fileParams.entrySet().iterator();
+//            while (fileIt.hasNext()) {
+//                Map.Entry<String, byte[]> fileEntry = (Map.Entry<String, byte[]>) fileIt.next();
+//                out.writeBytes("--" + BOUNDARY + NEWLINE);
+//                out.writeBytes("Content-Disposition: form-data; name=\"" + imageName
+//                        + "\"; filename=\"" + fileEntry.getKey() + "\"");
+//                out.writeBytes(NEWLINE);
+//                out.writeBytes("Content-Type: image/jpeg");//此处很关键
+//                out.writeBytes(NEWLINE + NEWLINE);
+//                out.write(fileEntry.getValue());
+//                out.writeBytes(NEWLINE);
+//            }
+//        }
+//        out.writeBytes("--" + BOUNDARY + "--");
+//        out.flush();
+//        out.close();
+//        InputStream in;
+//        int code = connection.getResponseCode();
+//        StringBuffer stringBuffer = new StringBuffer();
+//        try {
+//            if (code == HttpURLConnection.HTTP_OK) {
+//                in = connection.getInputStream();
+//            } else {
+//                in = connection.getErrorStream();
+//            }
+//        } catch (SSLException e) {
+//            e.printStackTrace();
+//            throw new IllegalArgumentException("fail to get inputStream");
+//        }
+//        if (null != in) {
+//            InputStreamReader responseContent = new InputStreamReader(in, "UTF-8");
+//            char[] quota = new char[1024];
+//
+//            int remaining;
+//            while ((remaining = responseContent.read(quota)) > 0) {
+//                stringBuffer.append(quota, 0, remaining);
+//            }
+//        }
+//        ResponseWrapper wrapper = new ResponseWrapper();
+//        String responseContentStr = stringBuffer.toString();
+//        wrapper.responseCode = code;
+//        wrapper.responseContent = responseContentStr;
+//        String quota1 = connection.getHeaderField("X-Rate-Limit-Limit");
+//        String remaining1 = connection.getHeaderField("X-Rate-Limit-Remaining");
+//        String reset = connection.getHeaderField("X-Rate-Limit-Reset");
+//        wrapper.setRateLimit(quota1, remaining1, reset);
+//
+//        if (code >= HttpURLConnection.HTTP_OK && code < HttpURLConnection.HTTP_MULT_CHOICE) {
+//            LOG.debug("Succeed to get response OK - responseCode:" + code);
+//            LOG.debug("Response Content - " + responseContentStr);
+//        } else {
+//            if (code < HttpURLConnection.HTTP_MULT_CHOICE || code >= HttpURLConnection.HTTP_BAD_REQUEST) {
+//                LOG.warn("Got error response - responseCode:" + code + ", responseContent:" + responseContentStr);
+//                wrapper.setErrorObject();
+//                throw new APIRequestException(wrapper);
+//            }
+//
+//            LOG.warn("Normal response but unexpected - responseCode:" + code + ", responseContent:" + responseContentStr);
+//        }
+//        return SignResult.fromResponse(wrapper, SignResult.class);
+//    }
+
+
+    public ResponseWrapper doPostSign(String strUrl, Map<String, Object> params, Map<String, byte[]> fileParams, String fileName) throws Exception {
+        ResponseWrapper wrapper = new ResponseWrapper();
+        String TWO_HYPHENS = "--";
+        String LINE_END = "\r\n";
+
         URL url = new URL(strUrl);
-        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-        connection.setRequestMethod("POST");
-        connection.setDoOutput(true);
-        connection.setDoInput(true);
-        connection.setUseCaches(false);
-        connection.setInstanceFollowRedirects(true);
-        connection.setRequestProperty("connection", "Keep-Alive");
-        connection.setRequestProperty("Charset", "UTF-8");
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();//得到connection对象
+        /************************************设置请求头*************************************************/
+        connection.setRequestMethod("POST");    //设置请求方式为POST
+        connection.setDoOutput(true);           //允许写出
+        connection.setDoInput(true);            //允许读入
+        connection.setUseCaches(false);         //不使用缓存
+        connection.setRequestProperty("Charset", "utf-8");//编码格式
         connection.setRequestProperty("Authorization", _authCode);
-        connection.setRequestProperty("Accept", "application/json, text/plain, */*"); // 设置接收数据的格式
-        connection.setRequestProperty("Content-Type", "multipart/form-data; boundary=" + BOUNDARY); // 设置发送数据的格式
-        connection.connect();
-        DataOutputStream out = new DataOutputStream(connection.getOutputStream());
+        connection.setRequestProperty("Content-Type", "multipart/form-data ; boundary=" + BOUNDARY); // 设置发送数据的格式(form-data格式)   //boundary为头部分隔符，头部拼接时需要分隔符。例如下面的有多个"Content-Disposition"拼接时需要用到此分隔符
+        connection.connect(); //连接
+        /************************************输出流，写数据,start*************************************************/
+        DataOutputStream out = new DataOutputStream(connection.getOutputStream());//获得输出流对象
+        StringBuffer strBufparam = new StringBuffer();
         Iterator it = params.entrySet().iterator();
         while (it.hasNext()) {
+            //封装键值对数据
             Map.Entry<String, String> entry = (Map.Entry) it.next();
             String key = entry.getKey();
             String value = String.valueOf(entry.getValue());
-            out.writeBytes("--" + BOUNDARY + NEWLINE);
-            out.writeBytes("Content-Disposition: form-data; name=\"" + key + "\"");
-            out.writeBytes(NEWLINE + NEWLINE);
-            out.writeBytes(value + NEWLINE);
+
+            strBufparam.append(TWO_HYPHENS);
+            strBufparam.append(BOUNDARY);
+            strBufparam.append(LINE_END);//"--" + BOUNDARY + "\r\n"
+            strBufparam.append("Content-Disposition: form-data; name=\"" + key + "\"");
+            strBufparam.append(LINE_END);
+            strBufparam.append(LINE_END);
+            strBufparam.append(value);
+            strBufparam.append(LINE_END);
         }
+        out.write(strBufparam.toString().getBytes("utf-8"));
+        //写入图片参数
         if (fileParams != null && fileParams.size() > 0) {
             Iterator fileIt = fileParams.entrySet().iterator();
             while (fileIt.hasNext()) {
                 Map.Entry<String, byte[]> fileEntry = (Map.Entry<String, byte[]>) fileIt.next();
-                out.writeBytes("--" + BOUNDARY + NEWLINE);
-                out.writeBytes("Content-Disposition: form-data; name=\"" + imageName
-                        + "\"; filename=\"" + fileEntry.getKey() + "\"");
-                out.writeBytes(NEWLINE);
-                out.writeBytes("Content-Type: image/jpeg");//此处很关键
-                out.writeBytes(NEWLINE + NEWLINE);
-                out.write(fileEntry.getValue());
-                out.writeBytes(NEWLINE);
+                //拼接文件的参数
+                StringBuffer strBufFile = new StringBuffer();
+                strBufFile.append(TWO_HYPHENS);
+                strBufFile.append(BOUNDARY);
+                strBufFile.append(LINE_END);
+                strBufFile.append("Content-Disposition: form-data; name=\"" + fileName + "\"; filename=\"" + fileEntry.getKey() + "\"");// filename：参数名。fileEntry.getKey()：文件名称
+                strBufFile.append(LINE_END);
+                strBufFile.append("Content-Type: image/jpeg");//此处很关键----文件格式
+                strBufFile.append(LINE_END);
+                strBufFile.append(LINE_END);
+                out.write(strBufFile.toString().getBytes());
+                out.write(fileEntry.getValue());//文件 (此参数之前调用了本页面的重写方法getBytes(File f)，将文件转换为字节数组了 )
+                out.write((LINE_END).getBytes());
             }
         }
-        out.writeBytes("--" + BOUNDARY + "--");
+
+        //写入标记结束位
+        byte[] endData = (TWO_HYPHENS + BOUNDARY + TWO_HYPHENS + LINE_END).getBytes();//写结束标记位
+        out.write(endData);
         out.flush();
         out.close();
+
+        /************************************输出流，写数据完成end*************************************************/
+        int code = connection.getResponseCode(); //获得响应码（200为成功返回）
         InputStream in;
-        int code = connection.getResponseCode();
-        StringBuffer stringBuffer = new StringBuffer();
         try {
-            if (code == 200) {
-                in = connection.getInputStream();
+            if (code == HttpURLConnection.HTTP_OK) {
+                in = connection.getInputStream(); //获取响应流
             } else {
-                in = connection.getErrorStream();
+                in = connection.getErrorStream(); //获取响应流
             }
         } catch (SSLException e) {
             e.printStackTrace();
             throw new IllegalArgumentException("fail to get inputStream");
         }
-        if (null != in) {
-            InputStreamReader responseContent = new InputStreamReader(in, "UTF-8");
-            char[] quota = new char[1024];
-
-            int remaining;
-            while ((remaining = responseContent.read(quota)) > 0) {
-                stringBuffer.append(quota, 0, remaining);
-            }
+        /**********读取返回的输入流信息**************/
+        byte[] bytes;
+        ByteArrayOutputStream baout = new ByteArrayOutputStream();
+        byte[] buff = new byte[1024];
+        int len;
+        while ((len = in.read(buff)) != -1) {
+            baout.write(buff, 0, len);
         }
-        ResponseWrapper wrapper = new ResponseWrapper();
-        String responseContentStr = stringBuffer.toString();
+        bytes = baout.toByteArray();
+        in.close();
+        String ret = new String(bytes, "utf-8");
+        /**********封装返回的输入流信息**************/
+        String responseContentStr = ret;
         wrapper.responseCode = code;
         wrapper.responseContent = responseContentStr;
-        String quota1 = connection.getHeaderField("X-Rate-Limit-Limit");
-        String remaining1 = connection.getHeaderField("X-Rate-Limit-Remaining");
-        String reset = connection.getHeaderField("X-Rate-Limit-Reset");
-        wrapper.setRateLimit(quota1, remaining1, reset);
-
-        if (code >= 200 && code < 300) {
-            LOG.debug("Succeed to get response OK - responseCode:" + code);
-            LOG.debug("Response Content - " + responseContentStr);
-        } else {
-            if (code < 300 || code >= 400) {
-                LOG.warn("Got error response - responseCode:" + code + ", responseContent:" + responseContentStr);
-                wrapper.setErrorObject();
-                throw new APIRequestException(wrapper);
-            }
-
-            LOG.warn("Normal response but unexpected - responseCode:" + code + ", responseContent:" + responseContentStr);
-        }
-        return SignResult.fromResponse(wrapper, SignResult.class);
+        return wrapper;
     }
 
+    /**
+     * 将文件转换为byte数组
+     *
+     * @param f
+     * @return
+     */
     public static byte[] getBytes(File f) {
         try {
             InputStream in = new FileInputStream(f);
@@ -569,8 +670,10 @@ public class SMSClient {
             out.close();
             return out.toByteArray();
         } catch (IOException e) {
+            e.printStackTrace();
             throw new IllegalArgumentException("File is invalid, please check again");
         }
     }
+
 
 }
