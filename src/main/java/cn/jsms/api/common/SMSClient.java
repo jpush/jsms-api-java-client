@@ -456,19 +456,19 @@ public class SMSClient {
         return SignInfoResult.fromResponse(responseWrapper, SignInfoResult.class);
     }
 
-    /**
-     * set default sign
-     *
-     * @param payload
-     * @return
-     * @throws APIConnectionException
-     * @throws APIRequestException
-     */
-    public ResponseWrapper setDefaultSign(DefaultSignPayload payload) throws APIConnectionException, APIRequestException {
-        Preconditions.checkArgument(payload != null, "sign should not be null");
-        ResponseWrapper responseWrapper = _httpClient.sendPost(_baseUrl + _signDefaultPath, payload.toString());
-        return responseWrapper;
-    }
+//    /**
+//     * set default sign  Discard
+//     *
+//     * @param payload
+//     * @return
+//     * @throws APIConnectionException
+//     * @throws APIRequestException
+//     */
+//    public ResponseWrapper setDefaultSign(DefaultSignPayload payload) throws APIConnectionException, APIRequestException {
+//        Preconditions.checkArgument(payload != null, "sign should not be null");
+//        ResponseWrapper responseWrapper = _httpClient.sendPost(_baseUrl + _signDefaultPath, payload.toString());
+//        return responseWrapper;
+//    }
 
     /**
      * post sign

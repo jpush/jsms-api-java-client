@@ -11,6 +11,7 @@ import cn.jsms.api.common.model.BatchSMSResult;
 import cn.jsms.api.common.model.RecipientPayload;
 import cn.jsms.api.schedule.model.ScheduleResult;
 import cn.jsms.api.schedule.model.ScheduleSMSPayload;
+import cn.jsms.api.sign.DefaultSignPayload;
 import cn.jsms.api.sign.SignInfoResult;
 import cn.jsms.api.sign.SignPayload;
 import cn.jsms.api.sign.SignResult;
@@ -43,9 +44,9 @@ public class JSMSExample {
     
     public static void main(String[] args) {
 //    	testSendSMSCode();
-//    	testCreateSign();
-//        testUpdateSign();not pass
-        testCheckSign();
+//    	testCreateSign();pass
+//        testUpdateSign();no pass
+//        testCheckSign();pass
 //        testSendVoiceSMSCode();
 //        testSendTemplateSMS();
     }
@@ -462,5 +463,21 @@ public class JSMSExample {
             LOG.info("Error Message: " + e.getMessage());
         }
     }
+
+//    public static void testDefaultSign(){
+//        try {
+//            SMSClient client = new SMSClient(masterSecret, appkey);
+//            DefaultSignPayload payload = DefaultSignPayload.newBuilder().
+//                    id(10859).name("SDK6").build();
+//            ResponseWrapper result = client.setDefaultSign(payload);
+//            LOG.info(result.toString());
+//        }catch (APIConnectionException e) {
+//            LOG.error("Connection error. Should retry later. ", e);
+//        } catch (APIRequestException e) {
+//            LOG.error("Error response from JPush server. Should review and fix it. ", e);
+//            LOG.info("HTTP Status: " + e.getStatus());
+//            LOG.info("Error Message: " + e.getMessage());
+//        }
+//    }
     
 }
