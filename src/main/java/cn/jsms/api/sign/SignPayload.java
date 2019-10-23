@@ -3,6 +3,7 @@ package cn.jsms.api.sign;
 import cn.jiguang.common.utils.Preconditions;
 import cn.jiguang.common.utils.StringUtils;
 import cn.jsms.api.common.model.IModel;
+import cn.jsms.api.template.TemplatePayload;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -36,7 +37,9 @@ public class SignPayload implements IModel {
         remark = builder.remark;
         type = builder.type;
     }
-
+    public static SignPayload.Builder newBuilder() {
+        return new SignPayload.Builder();
+    }
     public static final class Builder {
         private String sign;
         private File[] images;

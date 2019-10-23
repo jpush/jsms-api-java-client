@@ -1,6 +1,7 @@
 package cn.jsms.api.sign;
 
 import cn.jsms.api.common.model.IModel;
+import cn.jsms.api.template.TemplatePayload;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -39,6 +40,10 @@ public class DefaultSignPayload implements IModel {
         public DefaultSignPayload build() {
             return new DefaultSignPayload(this);
         }
+    }
+
+    public static DefaultSignPayload.Builder newBuilder() {
+        return new DefaultSignPayload.Builder();
     }
 
     public JsonElement toJSON() {

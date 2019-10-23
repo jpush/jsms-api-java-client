@@ -378,8 +378,11 @@ public class SMSClient {
         params.put(SignPayload.getREMARK(), payload.getRemark());
         params.put(SignPayload.getTYPE(), payload.getType());
         Map<String, byte[]> fileParams = new HashMap<String, byte[]>();
-        for (File file : payload.getImages()) {
-            fileParams.put(file.getName(), getBytes(file));
+        File[] images = payload.getImages();
+        if (images != null && images.length > 0){
+            for (File file : payload.getImages()) {
+                fileParams.put(file.getName(), getBytes(file));
+            }
         }
         String url = _baseUrl + _signPath;
         try {
@@ -409,8 +412,11 @@ public class SMSClient {
         params.put(SignPayload.getREMARK(), payload.getRemark());
         params.put(SignPayload.getTYPE(), payload.getType());
         Map<String, byte[]> fileParams = new HashMap<String, byte[]>();
-        for (File file : payload.getImages()) {
-            fileParams.put(file.getName(), getBytes(file));
+        File[] images = payload.getImages();
+        if (images != null && images.length > 0){
+            for (File file : payload.getImages()) {
+                fileParams.put(file.getName(), getBytes(file));
+            }
         }
         String url = _baseUrl + _signPath + "/" + signId;
         try {
@@ -423,6 +429,7 @@ public class SMSClient {
 
     /**
      * delete sig by id
+     *
      * @param signId
      * @return
      * @throws APIConnectionException
@@ -435,6 +442,7 @@ public class SMSClient {
 
     /**
      * get sign by id
+     *
      * @param signId
      * @return
      * @throws APIConnectionException
@@ -448,6 +456,7 @@ public class SMSClient {
 
     /**
      * set default sign
+     *
      * @param payload
      * @return
      * @throws APIConnectionException
@@ -460,7 +469,7 @@ public class SMSClient {
     }
 
     private SignResult doPostSign(String strUrl, Map<String, Object> params, Map<String, byte[]> fileParams,
-                                 String imageName) throws Exception {
+                                  String imageName) throws Exception {
         URL url = new URL(strUrl);
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setDoOutput(true);

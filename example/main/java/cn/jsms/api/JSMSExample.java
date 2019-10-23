@@ -11,6 +11,8 @@ import cn.jsms.api.common.model.BatchSMSResult;
 import cn.jsms.api.common.model.RecipientPayload;
 import cn.jsms.api.schedule.model.ScheduleResult;
 import cn.jsms.api.schedule.model.ScheduleSMSPayload;
+import cn.jsms.api.sign.SignPayload;
+import cn.jsms.api.sign.SignResult;
 import cn.jsms.api.template.SendTempSMSResult;
 import cn.jsms.api.template.TempSMSResult;
 import cn.jsms.api.template.TemplatePayload;
@@ -22,6 +24,7 @@ import cn.jiguang.common.resp.APIRequestException;
 import cn.jsms.api.common.SMSClient;
 import cn.jsms.api.common.model.SMSPayload;
 
+import java.security.KeyStore;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,7 +41,7 @@ public class JSMSExample {
     
     public static void main(String[] args) {
 //    	testSendSMSCode();
-    	testSendValidSMSCode();
+    	testCreateSign();
 //        testSendVoiceSMSCode();
 //        testSendTemplateSMS();
     }
@@ -388,6 +391,25 @@ public class JSMSExample {
             ResponseWrapper result = client.deleteTemplate(144923);
             LOG.info(result.toString());
         } catch (APIConnectionException e) {
+            LOG.error("Connection error. Should retry later. ", e);
+        } catch (APIRequestException e) {
+            LOG.error("Error response from JPush server. Should review and fix it. ", e);
+            LOG.info("HTTP Status: " + e.getStatus());
+            LOG.info("Error Message: " + e.getMessage());
+        }
+    }
+
+    public static void testCreateSign(){
+	    try {
+            SMSClient client = new SMSClient(masterSecret, appkey);
+            SignPayload payload = SignPayload.newBuilder().
+                    sign("极光SDK").
+                    type(1).
+                    remark("测试SDK").
+                    build();
+            SignResult result = client.createSign(payload);
+            LOG.info(result.toString());
+        }catch (APIConnectionException e) {
             LOG.error("Connection error. Should retry later. ", e);
         } catch (APIRequestException e) {
             LOG.error("Error response from JPush server. Should review and fix it. ", e);
