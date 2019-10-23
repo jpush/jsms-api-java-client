@@ -11,6 +11,7 @@ import cn.jsms.api.common.model.BatchSMSResult;
 import cn.jsms.api.common.model.RecipientPayload;
 import cn.jsms.api.schedule.model.ScheduleResult;
 import cn.jsms.api.schedule.model.ScheduleSMSPayload;
+import cn.jsms.api.sign.SignInfoResult;
 import cn.jsms.api.sign.SignPayload;
 import cn.jsms.api.sign.SignResult;
 import cn.jsms.api.template.SendTempSMSResult;
@@ -42,7 +43,9 @@ public class JSMSExample {
     
     public static void main(String[] args) {
 //    	testSendSMSCode();
-    	testCreateSign();
+//    	testCreateSign();
+//        testUpdateSign();not pass
+        testCheckSign();
 //        testSendVoiceSMSCode();
 //        testSendTemplateSMS();
     }
@@ -413,6 +416,43 @@ public class JSMSExample {
                     images(files).
                     build();
             SignResult result = client.createSign(payload);
+            LOG.info(result.toString());
+        }catch (APIConnectionException e) {
+            LOG.error("Connection error. Should retry later. ", e);
+        } catch (APIRequestException e) {
+            LOG.error("Error response from JPush server. Should review and fix it. ", e);
+            LOG.info("HTTP Status: " + e.getStatus());
+            LOG.info("Error Message: " + e.getMessage());
+        }
+    }
+
+    public static void testUpdateSign(){
+        try {
+            File avatar_file = new File("C:\\Users\\jiguang\\Desktop\\testSign.jpg");
+            File[] files = new File[1];
+            files[0] = avatar_file;
+            SMSClient client = new SMSClient(masterSecret, appkey);
+            SignPayload payload = SignPayload.newBuilder().
+                    sign("SDK6").
+                    type(1).
+                    remark("SDK测试").
+                    images(files).
+                    build();
+            SignResult result = client.updateSign(payload,10859);
+            LOG.info(result.toString());
+        }catch (APIConnectionException e) {
+            LOG.error("Connection error. Should retry later. ", e);
+        } catch (APIRequestException e) {
+            LOG.error("Error response from JPush server. Should review and fix it. ", e);
+            LOG.info("HTTP Status: " + e.getStatus());
+            LOG.info("Error Message: " + e.getMessage());
+        }
+    }
+
+    public static void testCheckSign(){
+        try {
+            SMSClient client = new SMSClient(masterSecret, appkey);
+            SignInfoResult result = client.checkSign(10859);
             LOG.info(result.toString());
         }catch (APIConnectionException e) {
             LOG.error("Connection error. Should retry later. ", e);

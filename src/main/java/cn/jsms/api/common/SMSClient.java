@@ -452,7 +452,7 @@ public class SMSClient {
      */
     public SignInfoResult checkSign(int signId) throws APIConnectionException, APIRequestException {
         Preconditions.checkArgument(signId > 0, "sign id is invalid");
-        ResponseWrapper responseWrapper = _httpClient.sendGet(_baseUrl + _tempMsgPath + "/" + signId);
+        ResponseWrapper responseWrapper = _httpClient.sendGet(_baseUrl + _signPath + "/" + signId);
         return SignInfoResult.fromResponse(responseWrapper, SignInfoResult.class);
     }
 
