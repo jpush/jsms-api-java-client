@@ -488,7 +488,7 @@ public class SMSClient {
         while (it.hasNext()) {
             Map.Entry<String, String> entry = (Map.Entry) it.next();
             String key = entry.getKey();
-            String value = entry.getValue();
+            String value = String.valueOf(entry.getValue());
             out.writeBytes("--" + BOUNDARY + NEWLINE);
             out.writeBytes("Content-Disposition: form-data; name=\"" + key + "\"");
             out.writeBytes(NEWLINE + NEWLINE);
