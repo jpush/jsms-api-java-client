@@ -24,6 +24,7 @@ import cn.jiguang.common.resp.APIRequestException;
 import cn.jsms.api.common.SMSClient;
 import cn.jsms.api.common.model.SMSPayload;
 
+import java.io.File;
 import java.security.KeyStore;
 import java.util.ArrayList;
 import java.util.List;
@@ -401,11 +402,15 @@ public class JSMSExample {
 
     public static void testCreateSign(){
 	    try {
+            File avatar_file = new File("C:\\Users\\jiguang\\Desktop\\sign.jpg");
+            File[] files = new File[1];
+            files[0] = avatar_file;
             SMSClient client = new SMSClient(masterSecret, appkey);
             SignPayload payload = SignPayload.newBuilder().
-                    sign("SDK3").
+                    sign("SDK6").
                     type(1).
                     remark("SDK测试").
+                    images(files).
                     build();
             SignResult result = client.createSign(payload);
             LOG.info(result.toString());

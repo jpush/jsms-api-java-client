@@ -479,7 +479,8 @@ public class SMSClient {
      * @return
      * @throws Exception
      */
-    public ResponseWrapper doPostSign(String strUrl, Map<String, Object> params, Map<String, byte[]> fileParams, String fileName) throws Exception {
+    public ResponseWrapper doPostSign(String strUrl, Map<String, Object> params, Map<String,
+            byte[]> fileParams, String fileName) throws Exception {
         ResponseWrapper wrapper = new ResponseWrapper();
         String TWO_HYPHENS = "--";
         String LINE_END = "\r\n";
@@ -527,10 +528,10 @@ public class SMSClient {
                 strBufFile.append(LINE_END);
                 strBufFile.append("Content-Disposition: form-data; name=\"" + fileName + "\"; filename=\"" + fileEntry.getKey() + "\"");// filename：参数名。fileEntry.getKey()：文件名称
                 strBufFile.append(LINE_END);
-                strBufFile.append("Content-Type: image/jpeg");//此处很关键----文件格式
+                strBufFile.append("Content-Type:application/octet-stream");
                 strBufFile.append(LINE_END);
                 strBufFile.append(LINE_END);
-                out.write(strBufFile.toString().getBytes());
+                out.write(strBufFile.toString().getBytes("utf-8"));
                 out.write(fileEntry.getValue());//文件 (此参数之前调用了本页面的重写方法getBytes(File f)，将文件转换为字节数组了 )
                 out.write((LINE_END).getBytes());
             }
