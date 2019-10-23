@@ -33,8 +33,8 @@ public class JSMSExample {
 
 	protected static final Logger LOG = LoggerFactory.getLogger(JSMSExample.class);
 
-    private static final String appkey = "242780bfdd7315dc1989fe2b";
-    private static final String masterSecret = "2f5ced2bef64167950e63d13";
+    private static final String appkey = "09198ca47f1cc830aa3e064c";
+    private static final String masterSecret = "4258ba884dbbceefe3cdb737";
 
     private static final String devKey = "242780bfdd7315dc1989fedb";
     private static final String devSecret = "2f5ced2bef64167950e63d13";

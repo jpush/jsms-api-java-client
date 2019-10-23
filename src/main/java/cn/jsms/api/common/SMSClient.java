@@ -472,11 +472,11 @@ public class SMSClient {
                                   String imageName) throws Exception {
         URL url = new URL(strUrl);
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        connection.setRequestMethod("POST");
         connection.setDoOutput(true);
         connection.setDoInput(true);
         connection.setUseCaches(false);
         connection.setInstanceFollowRedirects(true);
-        connection.setRequestMethod("POST");
         connection.setRequestProperty("connection", "Keep-Alive");
         connection.setRequestProperty("Charset", "UTF-8");
         connection.setRequestProperty("Authorization", _authCode);
