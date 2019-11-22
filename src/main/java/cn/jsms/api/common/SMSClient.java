@@ -560,9 +560,11 @@ public class SMSClient {
         byte[] bytes;
         ByteArrayOutputStream baout = new ByteArrayOutputStream();
         byte[] buff = new byte[1024];
-        int len;
-        while ((len = in.read(buff)) != -1) {
-            baout.write(buff, 0, len);
+        if (in != null){
+            int len;
+            while ((len = in.read(buff)) != -1) {
+                baout.write(buff, 0, len);
+            }
         }
         bytes = baout.toByteArray();
         in.close();
