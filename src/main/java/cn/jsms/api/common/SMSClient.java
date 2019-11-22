@@ -368,7 +368,7 @@ public class SMSClient {
      */
     public SignResult createSign(SignPayload payload) throws APIConnectionException, APIRequestException {
         Preconditions.checkArgument(null != payload, "sign payload should not be null");
-        Preconditions.checkArgument(payload.getType() > 0 && payload.getType() < 7,
+        Preconditions.checkArgument(payload.getType() > 0 && payload.getType() <= 7,
                 "type should be between 1 and 7");
         Preconditions.checkArgument(!StringUtils.isEmpty(payload.getSign()),
                 "sign should not be null");
@@ -404,7 +404,7 @@ public class SMSClient {
      */
     public SignResult updateSign(SignPayload payload, int signId) throws APIConnectionException, APIRequestException {
         Preconditions.checkArgument(null != payload, "sign payload should not be null");
-        Preconditions.checkArgument(payload.getType() > 0 && payload.getType() < 7,
+        Preconditions.checkArgument(payload.getType() > 0 && payload.getType() <= 7,
                 "type should be between 1 and 7");
         Preconditions.checkArgument(!StringUtils.isEmpty(payload.getSign()),
                 "sign should not be null");
