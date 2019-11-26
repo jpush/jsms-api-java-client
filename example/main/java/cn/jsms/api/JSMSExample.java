@@ -47,7 +47,7 @@ public class JSMSExample {
 //    	testCreateSign();pass
 //        testUpdateSign();no pass
 //        testCheckSign();pass
-        testDeleteSign();
+        testUpdateSign();
 //        testSendVoiceSMSCode();
 //        testSendTemplateSMS();
     }

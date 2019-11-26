@@ -11,6 +11,8 @@ import cn.jsms.api.common.model.BatchSMSResult;
 import cn.jsms.api.common.model.RecipientPayload;
 import cn.jsms.api.schedule.model.ScheduleResult;
 import cn.jsms.api.schedule.model.ScheduleSMSPayload;
+import cn.jsms.api.sign.SignPayload;
+import cn.jsms.api.sign.SignResult;
 import cn.jsms.api.template.SendTempSMSResult;
 import cn.jsms.api.template.TempSMSResult;
 import cn.jsms.api.template.TemplatePayload;
@@ -31,6 +33,7 @@ import cn.jsms.api.ValidSMSResult;
 import cn.jsms.api.common.SMSClient;
 import cn.jsms.api.common.model.SMSPayload;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -39,7 +42,8 @@ import java.util.Map;
 
 @Category(SlowTests.class)
 public class SMSClientTest extends BaseTest {
-
+    private static final String appkey = "09198ca47f1cc830aa3e064c";
+    private static final String masterSecret = "4258ba884dbbceefe3cdb737";
     private static Logger LOG = LoggerFactory.getLogger(SMSClientTest.class);
     private SMSClient client = null;
 
@@ -525,4 +529,28 @@ public class SMSClientTest extends BaseTest {
             LOG.info("Error Message: " + e.getMessage());
         }
     }
+    @Test
+    public  void testUpdateSign(){
+        try {
+            File avatar_file = new File("C:\\Users\\jiguang\\Desktop\\testSign.jpg");
+            File[] files = new File[1];
+            files[0] = avatar_file;
+            SMSClient client = new SMSClient(masterSecret, appkey);
+            SignPayload payload = SignPayload.newBuilder().
+                    sign("SDK6").
+                    type(1).
+                    remark("SDK测试").
+                    images(files).
+                    build();
+            SignResult result = client.updateSign(payload,10859);
+            LOG.info(result.toString());
+        }catch (APIConnectionException e) {
+            LOG.error("Connection error. Should retry later. ", e);
+        } catch (APIRequestException e) {
+            LOG.error("Error response from JPush server. Should review and fix it. ", e);
+            LOG.info("HTTP Status: " + e.getStatus());
+            LOG.info("Error Message: " + e.getMessage());
+        }
+    }
+
 }
