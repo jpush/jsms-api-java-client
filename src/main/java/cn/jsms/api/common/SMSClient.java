@@ -565,9 +565,9 @@ public class SMSClient {
             while ((len = in.read(buff)) != -1) {
                 baout.write(buff, 0, len);
             }
+            in.close();
         }
         bytes = baout.toByteArray();
-        in.close();
         String ret = new String(bytes, "utf-8");
         /**********封装返回的输入流信息**************/
         String responseContentStr = ret;
