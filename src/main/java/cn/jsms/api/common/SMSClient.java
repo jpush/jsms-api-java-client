@@ -374,7 +374,9 @@ public class SMSClient {
                 "sign should not be null");
         Map<String, Object> params = new HashMap<String, Object>();
         params.put(SignPayload.getSIGN(), payload.getSign());
-        params.put(SignPayload.getREMARK(), payload.getRemark());
+        if (!StringUtils.isEmpty(payload.getRemark())){
+            params.put(SignPayload.getREMARK(), payload.getRemark());
+        }
         params.put(SignPayload.getTYPE(), payload.getType());
         Map<String, byte[]> fileParams = new HashMap<String, byte[]>();
         File[] images = payload.getImages();
@@ -410,7 +412,9 @@ public class SMSClient {
                 "sign should not be null");
         Map<String, Object> params = new HashMap<String, Object>();
         params.put(SignPayload.getSIGN(), payload.getSign());
-        params.put(SignPayload.getREMARK(), payload.getRemark());
+        if (!StringUtils.isEmpty(payload.getRemark())){
+            params.put(SignPayload.getREMARK(), payload.getRemark());
+        }
         params.put(SignPayload.getTYPE(), payload.getType());
         Map<String, byte[]> fileParams = new HashMap<String, byte[]>();
         File[] images = payload.getImages();
