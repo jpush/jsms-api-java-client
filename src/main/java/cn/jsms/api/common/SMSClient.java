@@ -391,6 +391,9 @@ public class SMSClient {
         String url = _baseUrl + _signPath;
         try {
             ResponseWrapper wrapper = doPostSign(url, params, fileParams, SignPayload.getIMAGES());
+            if (wrapper.responseCode != 200) {
+                throw new APIRequestException(wrapper);
+            }
             return SignResult.fromResponse(wrapper, SignResult.class);
         } catch (IOException e) {
             e.printStackTrace();
@@ -430,6 +433,9 @@ public class SMSClient {
         String url = _baseUrl + _signPath + "/" + signId;
         try {
             ResponseWrapper wrapper = doPostSign(url, params, fileParams, SignPayload.getIMAGES());
+            if (wrapper.responseCode != 200) {
+                throw new APIRequestException(wrapper);
+            }
             return SignResult.fromResponse(wrapper, SignResult.class);
         } catch (IOException e) {
             e.printStackTrace();
