@@ -376,7 +376,7 @@ public class SMSClient {
         Map<String, Object> params = new HashMap<String, Object>();
         params.put(SignPayload.getSIGN(), payload.getSign());
         if (!StringUtils.isEmpty(payload.getRemark())) {
-            Preconditions.checkArgument(payload.getRemark().length() < 100,
+            Preconditions.checkArgument(payload.getRemark().length() <= 100,
                     "remark too long");
             params.put(SignPayload.getREMARK(), payload.getRemark());
         }
@@ -418,7 +418,7 @@ public class SMSClient {
         Map<String, Object> params = new HashMap<String, Object>();
         params.put(SignPayload.getSIGN(), payload.getSign());
         if (!StringUtils.isEmpty(payload.getRemark())) {
-            Preconditions.checkArgument(payload.getRemark().length() < 100,
+            Preconditions.checkArgument(payload.getRemark().length() <= 100,
                     "remark too long");
             params.put(SignPayload.getREMARK(), payload.getRemark());
         }
