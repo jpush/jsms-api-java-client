@@ -374,7 +374,7 @@ public class SMSClient {
         params.put(SignPayload.getSIGN(), payload.getSign());
         if (!StringUtils.isEmpty(payload.getRemark())){
             Preconditions.checkArgument(payload.getRemark().length() <100 ,
-                    "type should be between 1 and 7");
+                    "remark too long");
             params.put(SignPayload.getREMARK(), payload.getRemark());
         }
         params.put(SignPayload.getTYPE(), payload.getType());
@@ -413,7 +413,7 @@ public class SMSClient {
         params.put(SignPayload.getSIGN(), payload.getSign());
         if (!StringUtils.isEmpty(payload.getRemark())){
             Preconditions.checkArgument(payload.getRemark().length() <100 ,
-                    "type should be between 1 and 7");
+                    "remark too long");
             params.put(SignPayload.getREMARK(), payload.getRemark());
         }
         params.put(SignPayload.getTYPE(), payload.getType());
