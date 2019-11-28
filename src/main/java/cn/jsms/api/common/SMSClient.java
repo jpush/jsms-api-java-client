@@ -360,7 +360,7 @@ public class SMSClient {
 
     /**
      * create sign
-     *
+     * 其实两个接口可以合并 但没时间搞
      * @param payload
      * @return
      * @throws APIConnectionException
@@ -370,11 +370,11 @@ public class SMSClient {
         Preconditions.checkArgument(null != payload, "sign payload should not be null");
         Preconditions.checkArgument(payload.getType() > 0 && payload.getType() <= 7,
                 "type should be between 1 and 7");
-        Preconditions.checkArgument(!StringUtils.isEmpty(payload.getSign()),
-                "sign should not be null");
         Map<String, Object> params = new HashMap<String, Object>();
         params.put(SignPayload.getSIGN(), payload.getSign());
         if (!StringUtils.isEmpty(payload.getRemark())){
+            Preconditions.checkArgument(payload.getRemark().length() <100 ,
+                    "type should be between 1 and 7");
             params.put(SignPayload.getREMARK(), payload.getRemark());
         }
         params.put(SignPayload.getTYPE(), payload.getType());
@@ -408,11 +408,12 @@ public class SMSClient {
         Preconditions.checkArgument(null != payload, "sign payload should not be null");
         Preconditions.checkArgument(payload.getType() > 0 && payload.getType() <= 7,
                 "type should be between 1 and 7");
-        Preconditions.checkArgument(!StringUtils.isEmpty(payload.getSign()),
-                "sign should not be null");
+
         Map<String, Object> params = new HashMap<String, Object>();
         params.put(SignPayload.getSIGN(), payload.getSign());
         if (!StringUtils.isEmpty(payload.getRemark())){
+            Preconditions.checkArgument(payload.getRemark().length() <100 ,
+                    "type should be between 1 and 7");
             params.put(SignPayload.getREMARK(), payload.getRemark());
         }
         params.put(SignPayload.getTYPE(), payload.getType());

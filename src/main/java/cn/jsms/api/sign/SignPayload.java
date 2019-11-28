@@ -70,7 +70,9 @@ public class SignPayload implements IModel {
         }
 
         public SignPayload build() {
-            Preconditions.checkArgument(!StringUtils.isEmpty(sign), "sign should be not empty");
+            Preconditions.checkArgument(!StringUtils.isEmpty(sign)&&sign.length()>=2
+                            &&sign.length()<=8,
+                    "sign should not be null or too long");
             Preconditions.checkArgument(type > 0 && type <= 7, "type should be between 1 and 7");
             return new SignPayload(this);
         }
