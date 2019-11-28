@@ -443,8 +443,13 @@ public class SMSClient {
      * @throws APIRequestException
      */
     public ResponseWrapper deleteSign(int signId) throws APIConnectionException, APIRequestException {
-        Preconditions.checkArgument(signId > 0, "sign id is invalid");
-        return _httpClient.sendDelete(_baseUrl + _signPath + "/" + signId);
+        try {
+            Preconditions.checkArgument(signId > 0, "sign id is invalid");
+            return _httpClient.sendDelete(_baseUrl + _signPath + "/" + signId);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new IllegalArgumentException("fail to delete sign");
+        }
     }
 
     /**
@@ -456,9 +461,14 @@ public class SMSClient {
      * @throws APIRequestException
      */
     public SignInfoResult checkSign(int signId) throws APIConnectionException, APIRequestException {
-        Preconditions.checkArgument(signId > 0, "sign id is invalid");
-        ResponseWrapper responseWrapper = _httpClient.sendGet(_baseUrl + _signPath + "/" + signId);
-        return SignInfoResult.fromResponse(responseWrapper, SignInfoResult.class);
+        try {
+            Preconditions.checkArgument(signId > 0, "sign id is invalid");
+            ResponseWrapper responseWrapper = _httpClient.sendGet(_baseUrl + _signPath + "/" + signId);
+            return SignInfoResult.fromResponse(responseWrapper, SignInfoResult.class);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new IllegalArgumentException("fail to check sign");
+        }
     }
 
 //    /**
