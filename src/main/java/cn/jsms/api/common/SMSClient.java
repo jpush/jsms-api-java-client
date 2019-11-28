@@ -2,6 +2,8 @@ package cn.jsms.api.common;
 
 import java.io.*;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -361,6 +363,7 @@ public class SMSClient {
     /**
      * create sign
      * 其实两个接口可以合并 但没时间搞
+     *
      * @param payload
      * @return
      * @throws APIConnectionException
@@ -372,8 +375,8 @@ public class SMSClient {
                 "type should be between 1 and 7");
         Map<String, Object> params = new HashMap<String, Object>();
         params.put(SignPayload.getSIGN(), payload.getSign());
-        if (!StringUtils.isEmpty(payload.getRemark())){
-            Preconditions.checkArgument(payload.getRemark().length() <100 ,
+        if (!StringUtils.isEmpty(payload.getRemark())) {
+            Preconditions.checkArgument(payload.getRemark().length() < 100,
                     "remark too long");
             params.put(SignPayload.getREMARK(), payload.getRemark());
         }
@@ -389,7 +392,7 @@ public class SMSClient {
         try {
             ResponseWrapper wrapper = doPostSign(url, params, fileParams, SignPayload.getIMAGES());
             return SignResult.fromResponse(wrapper, SignResult.class);
-        } catch (Exception e) {
+        } catch (IOException e) {
             e.printStackTrace();
             throw new IllegalArgumentException("fail to creat sign");
         }
@@ -411,8 +414,8 @@ public class SMSClient {
 
         Map<String, Object> params = new HashMap<String, Object>();
         params.put(SignPayload.getSIGN(), payload.getSign());
-        if (!StringUtils.isEmpty(payload.getRemark())){
-            Preconditions.checkArgument(payload.getRemark().length() <100 ,
+        if (!StringUtils.isEmpty(payload.getRemark())) {
+            Preconditions.checkArgument(payload.getRemark().length() < 100,
                     "remark too long");
             params.put(SignPayload.getREMARK(), payload.getRemark());
         }
@@ -428,7 +431,7 @@ public class SMSClient {
         try {
             ResponseWrapper wrapper = doPostSign(url, params, fileParams, SignPayload.getIMAGES());
             return SignResult.fromResponse(wrapper, SignResult.class);
-        } catch (Exception e) {
+        } catch (IOException e) {
             e.printStackTrace();
             throw new IllegalArgumentException("fail to update sign");
         }
@@ -443,13 +446,8 @@ public class SMSClient {
      * @throws APIRequestException
      */
     public ResponseWrapper deleteSign(int signId) throws APIConnectionException, APIRequestException {
-        try {
-            Preconditions.checkArgument(signId > 0, "sign id is invalid");
-            return _httpClient.sendDelete(_baseUrl + _signPath + "/" + signId);
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new IllegalArgumentException("fail to delete sign");
-        }
+        Preconditions.checkArgument(signId > 0, "sign id is invalid");
+        return _httpClient.sendDelete(_baseUrl + _signPath + "/" + signId);
     }
 
     /**
@@ -461,14 +459,9 @@ public class SMSClient {
      * @throws APIRequestException
      */
     public SignInfoResult checkSign(int signId) throws APIConnectionException, APIRequestException {
-        try {
-            Preconditions.checkArgument(signId > 0, "sign id is invalid");
-            ResponseWrapper responseWrapper = _httpClient.sendGet(_baseUrl + _signPath + "/" + signId);
-            return SignInfoResult.fromResponse(responseWrapper, SignInfoResult.class);
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new IllegalArgumentException("fail to check sign");
-        }
+        Preconditions.checkArgument(signId > 0, "sign id is invalid");
+        ResponseWrapper responseWrapper = _httpClient.sendGet(_baseUrl + _signPath + "/" + signId);
+        return SignInfoResult.fromResponse(responseWrapper, SignInfoResult.class);
     }
 
 //    /**
@@ -487,6 +480,7 @@ public class SMSClient {
 
     /**
      * post sign
+     *
      * @param strUrl
      * @param params
      * @param fileParams
@@ -495,7 +489,7 @@ public class SMSClient {
      * @throws Exception
      */
     public ResponseWrapper doPostSign(String strUrl, Map<String, Object> params, Map<String,
-            byte[]> fileParams, String fileName) throws Exception {
+            byte[]> fileParams, String fileName) throws IOException {
         ResponseWrapper wrapper = new ResponseWrapper();
         String TWO_HYPHENS = "--";
         String LINE_END = "\r\n";
@@ -575,7 +569,7 @@ public class SMSClient {
         byte[] bytes;
         ByteArrayOutputStream baout = new ByteArrayOutputStream();
         byte[] buff = new byte[1024];
-        if (in != null){
+        if (in != null) {
             int len;
             while ((len = in.read(buff)) != -1) {
                 baout.write(buff, 0, len);
