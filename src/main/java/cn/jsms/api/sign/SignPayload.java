@@ -117,7 +117,7 @@ public class SignPayload implements IModel {
             json.addProperty(SIGN, sign);
         }
 
-        if (type > 0 && type <=7) {
+        if (type !=null && type > 0 && type <=7) {
             json.addProperty(TYPE, type);
         }
 
