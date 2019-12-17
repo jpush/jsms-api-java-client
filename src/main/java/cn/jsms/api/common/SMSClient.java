@@ -365,7 +365,7 @@ public class SMSClient {
      * 其实两个接口可以合并 但没时间搞
      *
      * @param payload
-     * @return
+     * @return SignResult
      * @throws APIConnectionException
      * @throws APIRequestException
      */
@@ -406,7 +406,7 @@ public class SMSClient {
      *
      * @param payload
      * @param signId
-     * @return
+     * @return SignResult
      * @throws APIConnectionException
      * @throws APIRequestException
      */
@@ -447,7 +447,7 @@ public class SMSClient {
      * delete sig by id
      *
      * @param signId
-     * @return
+     * @return ResponseWrapper
      * @throws APIConnectionException
      * @throws APIRequestException
      */
@@ -460,7 +460,7 @@ public class SMSClient {
      * get sign by id
      *
      * @param signId
-     * @return
+     * @return SignInfoResult
      * @throws APIConnectionException
      * @throws APIRequestException
      */
@@ -491,7 +491,7 @@ public class SMSClient {
      * @param params
      * @param fileParams
      * @param fileName
-     * @return
+     * @return ResponseWrapper
      * @throws Exception
      */
     public ResponseWrapper doPostSign(String strUrl, Map<String, Object> params, Map<String,
@@ -595,7 +595,7 @@ public class SMSClient {
      * 将文件转换为byte数组
      *
      * @param f
-     * @return
+     * @return byte[]
      */
     public static byte[] getBytes(File f) {
         try {

@@ -243,7 +243,7 @@ public class JSMSClient {
     /**
      * create sign
      * @param payload
-     * @return
+     * @return {@link SignResult}
      * @throws APIConnectionException
      * @throws APIRequestException
      */
@@ -255,7 +255,7 @@ public class JSMSClient {
      * update sign
      * @param payload
      * @param signId
-     * @return
+     * @return {@link SignResult}
      * @throws APIConnectionException
      * @throws APIRequestException
      */
@@ -266,7 +266,7 @@ public class JSMSClient {
     /**
      * delete sig by id
      * @param signId
-     * @return
+     * @return No content
      * @throws APIConnectionException
      * @throws APIRequestException
      */
@@ -277,7 +277,7 @@ public class JSMSClient {
     /**
      * get sign by id
      * @param signId
-     * @return
+     * @return {@link SignInfoResult}
      * @throws APIConnectionException
      * @throws APIRequestException
      */
