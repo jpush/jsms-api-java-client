@@ -487,12 +487,12 @@ public class SMSClient {
     /**
      * post sign
      *
-     * @param strUrl
-     * @param params
-     * @param fileParams
-     * @param fileName
+     * @param strUrl url
+     * @param params param
+     * @param fileParams fileParam
+     * @param fileName fileName
      * @return ResponseWrapper
-     * @throws Exception connect exception
+     * @throws IOException connect exception
      */
     public ResponseWrapper doPostSign(String strUrl, Map<String, Object> params, Map<String,
             byte[]> fileParams, String fileName) throws IOException {
