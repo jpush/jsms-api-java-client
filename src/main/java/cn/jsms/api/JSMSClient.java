@@ -242,10 +242,10 @@ public class JSMSClient {
 
     /**
      * create sign
-     * @param payload
+     * @param payload {@link SignPayload }
      * @return {@link SignResult}
-     * @throws APIConnectionException
-     * @throws APIRequestException
+     * @throws APIConnectionException connect exception
+     * @throws APIRequestException    request exception
      */
     public SignResult createSign(SignPayload payload) throws APIConnectionException, APIRequestException{
         return _smsClient.createSign(payload);
@@ -253,11 +253,11 @@ public class JSMSClient {
 
     /**
      * update sign
-     * @param payload
-     * @param signId
+     * @param payload {@link SignPayload }
+     * @param signId necessary
      * @return {@link SignResult}
-     * @throws APIConnectionException
-     * @throws APIRequestException
+     * @throws APIConnectionException connect exception
+     * @throws APIRequestException    request exception
      */
     public SignResult updateSign(SignPayload payload, int signId) throws APIConnectionException, APIRequestException{
         return _smsClient.updateSign(payload, signId);
@@ -265,10 +265,10 @@ public class JSMSClient {
 
     /**
      * delete sig by id
-     * @param signId
+     * @param signId necessary
      * @return No content
-     * @throws APIConnectionException
-     * @throws APIRequestException
+     * @throws APIConnectionException connect exception
+     * @throws APIRequestException    request exception
      */
     public ResponseWrapper deleteSign(int signId) throws APIConnectionException, APIRequestException{
         return _smsClient.deleteSign(signId);
@@ -276,10 +276,10 @@ public class JSMSClient {
 
     /**
      * get sign by id
-     * @param signId
+     * @param signId necessary
      * @return {@link SignInfoResult}
-     * @throws APIConnectionException
-     * @throws APIRequestException
+     * @throws APIConnectionException connect exception
+     * @throws APIRequestException    request exception
      */
     public SignInfoResult checkSign(int signId) throws APIConnectionException, APIRequestException{
         return _smsClient.checkSign(signId);

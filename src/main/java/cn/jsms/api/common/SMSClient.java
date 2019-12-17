@@ -364,10 +364,10 @@ public class SMSClient {
      * create sign
      * 其实两个接口可以合并 但没时间搞
      *
-     * @param payload
+     * @param payload {@link SignPayload }
      * @return SignResult
-     * @throws APIConnectionException
-     * @throws APIRequestException
+     * @throws APIConnectionException connect exception
+     * @throws APIRequestException    request exception
      */
     public SignResult createSign(SignPayload payload) throws APIConnectionException, APIRequestException {
         Preconditions.checkArgument(null != payload, "sign payload should not be null");
@@ -404,11 +404,11 @@ public class SMSClient {
     /**
      * update sign
      *
-     * @param payload
-     * @param signId
+     * @param payload {@link SignPayload }
+     * @param signId necessary
      * @return SignResult
-     * @throws APIConnectionException
-     * @throws APIRequestException
+     * @throws APIConnectionException connect exception
+     * @throws APIRequestException    request exception
      */
     public SignResult updateSign(SignPayload payload, int signId) throws APIConnectionException, APIRequestException {
         Preconditions.checkArgument(null != payload, "sign payload should not be null");
@@ -446,10 +446,10 @@ public class SMSClient {
     /**
      * delete sig by id
      *
-     * @param signId
+     * @param signId necessary
      * @return ResponseWrapper
-     * @throws APIConnectionException
-     * @throws APIRequestException
+     * @throws APIConnectionException connect exception
+     * @throws APIRequestException    request exception
      */
     public ResponseWrapper deleteSign(int signId) throws APIConnectionException, APIRequestException {
         Preconditions.checkArgument(signId > 0, "sign id is invalid");
@@ -459,10 +459,10 @@ public class SMSClient {
     /**
      * get sign by id
      *
-     * @param signId
+     * @param signId necessary
      * @return SignInfoResult
-     * @throws APIConnectionException
-     * @throws APIRequestException
+     * @throws APIConnectionException connect exception
+     * @throws APIRequestException    request exception
      */
     public SignInfoResult checkSign(int signId) throws APIConnectionException, APIRequestException {
         Preconditions.checkArgument(signId > 0, "sign id is invalid");
@@ -492,7 +492,7 @@ public class SMSClient {
      * @param fileParams
      * @param fileName
      * @return ResponseWrapper
-     * @throws Exception
+     * @throws Exception connect exception
      */
     public ResponseWrapper doPostSign(String strUrl, Map<String, Object> params, Map<String,
             byte[]> fileParams, String fileName) throws IOException {
@@ -594,8 +594,8 @@ public class SMSClient {
     /**
      * 将文件转换为byte数组
      *
-     * @param f
-     * @return byte[]
+     * @param f file
+     * @return byte[] bytes
      */
     public static byte[] getBytes(File f) {
         try {
