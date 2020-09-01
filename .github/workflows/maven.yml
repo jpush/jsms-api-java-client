@@ -19,7 +19,7 @@ jobs:
           server-username: MAVEN_USERNAME
           server-password: MAVEN_PASSWORD
       - name: Publish package
-        run: mvn clean deploy -Dmaven.test.skip -T 1C
+        run: mvn clean deploy -Dmaven.test.skip -Psonatype -T 1C
         env:
           MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
           MAVEN_PASSWORD: ${{ secrets.OSSRH_TOKEN }}
